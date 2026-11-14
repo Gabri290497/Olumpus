@@ -754,6 +754,69 @@ const MUSC_RETRO = {coscia:["femorali"], polpaccio:["polpacci"], bacino:["glutei
   addome:["lombari"], torace:["dorsali"], trapezio:["trapezio"], spalla:["deltoidiPost"],
   braccio:["tricipiti"], avambraccio:["avambracci"]};
 
+const LATO = {
+squat:{a:{h:[58,28],n:[58,44],p:[58,74],k:[58,95],a:[56,114],e:[50,50],w:[46,46]},
+       b:{h:[62,40],n:[61,55],p:[50,84],k:[66,97],a:[56,114],e:[53,61],w:[49,57]}},
+hinge:{a:{h:[58,28],n:[58,44],p:[58,74],k:[58,95],a:[56,114],e:[58,60],w:[60,76]},
+       b:{h:[76,50],n:[70,58],p:[52,76],k:[55,96],a:[56,114],e:[70,72],w:[71,88]}},
+staccoTerra:{a:{h:[74,54],n:[68,62],p:[50,80],k:[60,97],a:[56,114],e:[67,78],w:[66,104]},
+       b:{h:[58,28],n:[58,44],p:[58,74],k:[58,95],a:[56,114],e:[58,60],w:[64,78]}},
+pressoOrizz:{a:{f:-1,pav:[1,0],h:[84,84],n:[74,86],p:[48,88],k:[38,102],a:[40,116],e:[70,82],w:[76,76]},
+       b:{f:-1,pav:[1,0],h:[84,84],n:[74,86],p:[48,88],k:[38,102],a:[40,116],e:[75,74],w:[76,62]}},
+pressoIncl:{a:{f:-1,pav:[1,0],h:[78,64],n:[70,72],p:[50,92],k:[40,106],a:[42,118],e:[66,72],w:[74,68]},
+       b:{f:-1,pav:[1,0],h:[78,64],n:[70,72],p:[50,92],k:[40,106],a:[42,118],e:[72,60],w:[74,48]}},
+apertura:{a:{f:-1,pav:[1,0],h:[84,84],n:[74,86],p:[48,88],k:[38,102],a:[40,116],e:[72,76],w:[78,72]},
+       b:{f:-1,pav:[1,0],h:[84,84],n:[74,86],p:[48,88],k:[38,102],a:[40,116],e:[75,74],w:[76,62]}},
+pushup:{a:{pav:[-1,0],h:[88,78],n:[80,80],p:[54,86],k:[38,90],a:[24,94],e:[80,98],w:[82,116]},
+       b:{pav:[-1,0],h:[88,96],n:[80,98],p:[54,102],k:[38,106],a:[24,110],e:[68,108],w:[82,116]}},
+plank:{a:{pav:[-1,0],h:[88,86],n:[80,88],p:[54,94],k:[38,98],a:[24,102],e:[80,106],w:[92,113]},
+       b:{pav:[-1,0],h:[88,88],n:[80,90],p:[54,95],k:[38,99],a:[24,103],e:[80,107],w:[92,113]}},
+dip:{a:{h:[58,32],n:[58,48],p:[57,78],k:[50,98],a:[38,106],e:[56,64],w:[58,78]},
+       b:{h:[58,44],n:[58,60],p:[57,90],k:[50,108],a:[38,116],e:[46,70],w:[58,78]}},
+pressoVert:{a:{h:[58,28],n:[58,44],p:[58,74],k:[58,95],a:[56,114],e:[50,52],w:[54,42]},
+       b:{h:[58,28],n:[58,44],p:[58,74],k:[58,95],a:[56,114],e:[56,36],w:[58,22]}},
+tirataOrizz:{a:{h:[76,52],n:[70,60],p:[52,76],k:[55,96],a:[56,114],e:[71,76],w:[72,92]},
+       b:{h:[76,52],n:[70,60],p:[52,76],k:[55,96],a:[56,114],e:[56,72],w:[70,80]}},
+tirataVert:{a:{h:[58,40],n:[58,56],p:[58,86],k:[56,104],a:[52,118],e:[58,38],w:[58,18]},
+       b:{h:[58,28],n:[58,44],p:[58,74],k:[56,92],a:[52,108],e:[48,38],w:[58,18]}},
+curl:{a:{h:[58,28],n:[58,44],p:[58,74],k:[58,95],a:[56,114],e:[58,60],w:[60,78]},
+       b:{h:[58,28],n:[58,44],p:[58,74],k:[58,95],a:[56,114],e:[58,60],w:[70,52]}},
+tricipiti:{a:{h:[58,28],n:[58,44],p:[58,74],k:[58,95],a:[56,114],e:[58,60],w:[66,64]},
+       b:{h:[58,28],n:[58,44],p:[58,74],k:[58,95],a:[56,114],e:[58,60],w:[62,80]}},
+alzateLat:{a:{h:[58,28],n:[58,44],p:[58,74],k:[58,95],a:[56,114],e:[58,60],w:[58,78]},
+       b:{h:[58,28],n:[58,44],p:[58,74],k:[58,95],a:[56,114],e:[62,50],w:[66,44]}},
+alzatePost:{a:{h:[76,52],n:[70,60],p:[52,76],k:[55,96],a:[56,114],e:[72,76],w:[73,90]},
+       b:{h:[76,52],n:[70,60],p:[52,76],k:[55,96],a:[56,114],e:[62,66],w:[52,60]}},
+affondo:{a:{h:[58,28],n:[58,44],p:[58,74],k:[58,95],a:[56,114],e:[58,60],w:[58,78],k2:[52,95],a2:[50,114]},
+       b:{h:[58,40],n:[58,56],p:[56,86],k:[72,98],a:[74,116],e:[58,72],w:[58,90],k2:[40,102],a2:[30,118]}},
+legKnee:{a:{h:[44,46],n:[44,62],p:[46,90],k:[66,92],a:[70,110],e:[44,78],w:[52,86]},
+       b:{h:[44,46],n:[44,62],p:[46,90],k:[66,92],a:[88,92],e:[44,78],w:[52,86]}},
+ponte:{a:{f:-1,pav:[1,0],h:[82,80],n:[74,84],p:[50,106],k:[32,100],a:[28,118],e:[76,92],w:[70,100]},
+       b:{f:-1,pav:[1,0],h:[82,80],n:[74,84],p:[50,88],k:[32,92],a:[28,118],e:[76,92],w:[70,100]}},
+polpacci:{a:{h:[58,28],n:[58,44],p:[58,74],k:[58,95],a:[56,114],e:[58,60],w:[58,78]},
+       b:{h:[58,21],n:[58,37],p:[58,67],k:[58,88],a:[56,107],e:[58,53],w:[58,71]}},
+crunch:{a:{f:-1,pav:[1,0],h:[80,104],n:[74,102],p:[50,106],k:[36,94],a:[30,114],e:[78,96],w:[82,90]},
+       b:{f:-1,pav:[1,0],h:[74,90],n:[70,94],p:[50,106],k:[36,94],a:[30,114],e:[72,86],w:[76,80]}},
+corsa:{a:{h:[58,26],n:[58,42],p:[58,72],k:[66,90],a:[70,108],k2:[48,92],a2:[40,110],e:[66,58],w:[72,50],e2:[50,58],w2:[44,66]},
+       b:{h:[58,26],n:[58,42],p:[58,72],k:[48,92],a:[42,106],k2:[66,90],a2:[72,110],e:[50,58],w:[44,66],e2:[66,58],w2:[72,50]}},
+bici:{a:{h:[62,46],n:[60,60],p:[46,84],k:[66,92],a:[72,108],k2:[62,96],a2:[56,112],e:[62,70],w:[76,76]},
+       b:{h:[62,46],n:[60,60],p:[46,84],k:[64,96],a:[60,112],k2:[66,92],a2:[74,106],e:[62,70],w:[76,76]}},
+voga:{a:{h:[64,60],n:[60,70],p:[42,86],k:[70,86],a:[86,100],e:[62,78],w:[70,82]},
+       b:{h:[56,58],n:[54,68],p:[38,86],k:[64,92],a:[92,104],e:[44,78],w:[34,80]}}
+};;
+
+/* Quali viste spiegano davvero il movimento, schema per schema.
+   "lato" = profilo, "fronte" e "retro" = piano frontale. */
+const VISTE = {
+  squat:["lato","retro"], hinge:["lato"], staccoTerra:["lato"],
+  pressoOrizz:["lato"], pressoIncl:["lato"], apertura:["fronte"],
+  pushup:["lato"], plank:["lato"], dip:["lato"], pressoVert:["fronte","lato"],
+  tirataOrizz:["lato","retro"], tirataVert:["retro","lato"], curl:["fronte"],
+  tricipiti:["lato","retro"], alzateLat:["fronte"], alzatePost:["lato","retro"],
+  affondo:["lato"], legKnee:["lato"], ponte:["lato"], polpacci:["lato","retro"],
+  crunch:["lato"], corsa:["lato"], bici:["lato"], voga:["lato"]
+};
+
 function anima(exId){
   const pat = PATTERN[exId] || PER_GRUPPO[(EX[exId] || {}).g];
   if(!pat) return "";
@@ -768,9 +831,168 @@ function anima(exId){
   const mix = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
   const spec = o => { const m = {}; ["h","n","p","k","a","e","w"].forEach(j => m[j] = o[j] ? [MIR(o[j][0]), o[j][1]] : null); return m; };
 
-  const BASE = "#F1F1EF", BORDO = "#151515", FIB = "#8E8E8A";
-  const ROSSO = "#C0392B", ROSA = "#E3A49B", FIB_ON = "#7C2018";
-  const MET = "#6F6F6C", MET_S = "#2A2A28", MET_C = "#C4C4C0";
+  const UID = "fg" + String(exId).replace(/[^A-Za-z0-9]/g, "");
+  const OMBRA = "#C9CFD7", LUCE = "#F7F9FB", BORDO = "#2B3340", SEP = "#98A1AD", SEP_ON = "#A8341A";
+  const ROSSO = "#C8360F", ROSSO_C = "#F2602F", ARANCIO = "#D97A32", ARANCIO_C = "#F5A263";
+  const PANT = "#2E3440", PANT_L = "#4A5260", SCARPA = "#1E222B", SCARPA_L = "#3E4654", CAPELLI = "#2A2E38";
+  const FONDO = "#172338", CORNICE = "#E6EBF2", CHIP = "#2C5CC5";
+  const MET = "#9AA3AE", MET_S = "#13171F", MET_C = "#C8CDD4";
+
+  /* livello di attivazione per nomi di muscolo, usato dalla vista di profilo */
+  const attivo = nomi => {
+    let l = 0;
+    (nomi || []).forEach(x => { if(mus.p.indexOf(x) >= 0) l = 2; else if(l < 1 && mus.s.indexOf(x) >= 0) l = 1; });
+    return l;
+  };
+
+  function figuraLato(A, B){
+    const LONT="#949DAA", LONT_B="#4E5867";
+  
+    const ff=q=>q[0].toFixed(1)+","+q[1].toFixed(1);
+    const med=(a,b)=>[(a[0]+b[0])/2,(a[1]+b[1])/2];
+    const curva=pts=>{const k=pts.length;let d="M"+ff(med(pts[k-1],pts[0]));
+      for(let i=0;i<k;i++)d+=" Q"+ff(pts[i])+" "+ff(med(pts[i],pts[(i+1)%k]));return d+" Z";};
+    const verso=(pts,k)=>{let x=0,y=0;pts.forEach(q=>{x+=q[0];y+=q[1];});x/=pts.length;y/=pts.length;
+      return pts.map(q=>[x+(q[0]-x)*k,y+(q[1]-y)*k]);};
+    /* banda lungo un segmento: prof = [quota, bordo avanti, bordo dietro] */
+    const lungoP=(p1,p2,prof,s)=>{const dx=p2[0]-p1[0],dy=p2[1]-p1[1],L=Math.hypot(dx,dy)||1;
+      const nx=dy/L,ny=-dx/L; // normale che punta avanti quando il segmento scende
+      const at=(t,w)=>[p1[0]+dx*t+nx*w*s,p1[1]+dy*t+ny*w*s];
+      const av=[],di=[];
+      prof.forEach(q=>{av.push(at(q[0],q[1]));di.push(at(q[0],-q[2]));});
+      return av.concat(di.reverse());};
+  
+    let g="";
+    const parte=(pa,pb,musc,opt)=>{
+      opt=opt||{};
+      const l=musc?attivo(musc):0, base=opt.col||OMBRA;
+      const da=curva(pa), db=curva(pb);
+      g+='<path d="'+da+'" fill="'+base+'" stroke="'+(opt.bordo||BORDO)+'" stroke-width="'+
+        (opt.sw===undefined?".85":opt.sw)+'" stroke-linejoin="round">'+an("d",da,db)+
+        (l?an("fill",base,l===2?ROSSO:ARANCIO):"")+"</path>";
+      if(opt.piatto) return;
+      const la=curva(verso(pa,opt.k||.66)), lb=curva(verso(pb,opt.k||.66));
+      g+='<path d="'+la+'" fill="'+(opt.luce||LUCE)+'" stroke="none">'+an("d",la,lb)+
+        (l?an("fill",opt.luce||LUCE,l===2?ROSSO_C:ARANCIO_C):"")+"</path>";
+    };
+    const linea=(a1,b1,a2,b2,sw,col)=>{const pa=P([a1,b1]),pb=P([a2,b2]);
+      g+='<polyline points="'+pa+'" fill="none" stroke="'+(col||SEP)+'" stroke-width="'+(sw||.7)+
+        '" stroke-linecap="round">'+an("points",pa,pb)+"</polyline>";};
+  
+    /* assi del corpo */
+    const FR = A.f || 1;
+    /* assi locali: giu' = dalla testa al collo, avanti = perpendicolare secondo il verso */
+    const assi = o => {
+      const d = [o.n[0] - o.h[0], o.n[1] - o.h[1]], L = Math.hypot(d[0], d[1]) || 1;
+      const giu = [d[0] / L, d[1] / L];
+      return {giu: giu, av: [FR * giu[1], -FR * giu[0]]};
+    };
+    const loc = (o, fx, fy) => { const q = assi(o);
+      return [o.h[0] + q.av[0] * fx + q.giu[0] * fy, o.h[1] + q.av[1] * fx + q.giu[1] * fy]; };
+    const pavan = o => o.pav || assi(o).av;
+    const perp=(o,t,w)=>{const d=[o.p[0]-o.n[0],o.p[1]-o.n[1]],L=Math.hypot(d[0],d[1])||1;
+      const v=w*FR;
+      return [o.n[0]+d[0]*t+d[1]/L*v, o.n[1]+d[1]*t-d[0]/L*v];};
+    const lontano=(o,j)=>o[j+"2"]||[o[j][0]-5,o[j][1]+.5];
+  
+    /* profili */
+    const pCoscia=[[0,8.5,7.5],[.26,9.6,8.2],[.56,8.8,7.4],[.8,6.4,5.4],[1,4.2,4]];
+    const pPolp=[[0,4.2,4.4],[.16,5,6.2],[.34,4.4,6.4],[.6,3.2,4.6],[.82,2.4,2.8],[1,2.2,2.2]];
+    const pBraccio=[[0,4.6,4.8],[.32,5,5.2],[.62,4.6,4.6],[.86,3.4,3.4],[1,2.7,2.7]];
+    const pAvam=[[0,3.8,3.8],[.24,4.2,4.2],[.54,3.4,3.4],[.82,2.3,2.3],[1,1.9,1.9]];
+    const mezzaAv=p=>p.map(q=>[q[0],q[1],-1]);
+    const mezzaDi=p=>p.map(q=>[q[0],-1,q[2]]);
+  
+    /* ---- arto lontano, tono spento ---- */
+    [[A,B]].forEach(([a,b])=>{
+      const ka=lontano(a,"k"),kb=lontano(b,"k"),aa=lontano(a,"a"),ab=lontano(b,"a");
+      const ha=[a.p[0]-5,a.p[1]],hb=[b.p[0]-5,b.p[1]];
+      parte(lungoP(ha,ka,pCoscia,FR),lungoP(hb,kb,pCoscia,FR),null,{col:LONT,bordo:LONT_B,piatto:1,sw:.7});
+      parte(lungoP(ka,aa,pPolp,FR),lungoP(kb,ab,pPolp,FR),null,{col:LONT,bordo:LONT_B,piatto:1,sw:.7});
+      const pl=(o,c,fx,fy)=>{const v=o.pav||assi(o).av, u=[-v[1],v[0]];
+        return [c[0]+v[0]*fx+u[0]*fy, c[1]+v[1]*fx+u[1]*fy];};
+      parte([pl(a,aa,-4,-.5),pl(a,aa,6,-.5),pl(a,aa,6.4,5),pl(a,aa,-4.4,5)],
+            [pl(b,ab,-4,-.5),pl(b,ab,6,-.5),pl(b,ab,6.4,5),pl(b,ab,-4.4,5)],
+            null,{col:"#2A2F3A",bordo:LONT_B,piatto:1,sw:.7});
+      if(a.e&&a.w){
+        const ea=lontano(a,"e"),eb=lontano(b,"e"),wa=lontano(a,"w"),wb=lontano(b,"w");
+        const sa=[a.n[0]-5,a.n[1]+3],sb=[b.n[0]-5,b.n[1]+3];
+        parte(lungoP(sa,ea,pBraccio,FR),lungoP(sb,eb,pBraccio,FR),null,{col:LONT,bordo:LONT_B,piatto:1,sw:.7});
+        parte(lungoP(ea,wa,pAvam,FR),lungoP(eb,wb,pAvam,FR),null,{col:LONT,bordo:LONT_B,piatto:1,sw:.7});
+      }
+    });
+  
+    /* ---- busto ---- */
+    const busto=o=>[perp(o,0,7.5),perp(o,.22,9.6),perp(o,.46,8.6),perp(o,.7,7.2),perp(o,.94,7.8),
+                    perp(o,1.04,4),perp(o,1.06,-4),perp(o,.96,-9.6),perp(o,.7,-7.2),perp(o,.46,-8.2),
+                    perp(o,.22,-8.8),perp(o,0,-7.6)];
+    parte(busto(A),busto(B),null,{piatto:1});
+    /* pettorale, dorsale, obliquo, lombare */
+    const pett=o=>[perp(o,.04,7.2),perp(o,.06,9.2),perp(o,.3,8.6),perp(o,.34,3),perp(o,.06,2.5)];
+    parte(pett(A),pett(B),["petto"],{k:.72});
+    const dors=o=>[perp(o,.08,-7),perp(o,.1,-9),perp(o,.5,-7.6),perp(o,.56,-2),perp(o,.12,-2.5)];
+    parte(dors(A),dors(B),["dorsali"],{k:.7});
+    const obl=o=>[perp(o,.42,8),perp(o,.46,5),perp(o,.92,4),perp(o,.96,7.2)];
+    parte(obl(A),obl(B),["addome","obliqui"],{k:.6});
+    const lomb=o=>[perp(o,.56,-7.4),perp(o,.6,-3),perp(o,.94,-4),perp(o,.96,-8)];
+    parte(lomb(A),lomb(B),["lombari"],{k:.6});
+    /* gluteo */
+    const glut=o=>[perp(o,.86,-6),perp(o,.88,-10.6),perp(o,1.08,-9),perp(o,1.12,-2)];
+    parte(glut(A),glut(B),["glutei"],{k:.68});
+  
+    /* ---- gamba vicina ---- */
+    parte(lungoP(A.p,A.k,mezzaAv(pCoscia),FR),lungoP(B.p,B.k,mezzaAv(pCoscia),FR),["quadricipiti","adduttori"],{k:.6});
+    parte(lungoP(A.p,A.k,mezzaDi(pCoscia),FR),lungoP(B.p,B.k,mezzaDi(pCoscia),FR),["femorali"],{k:.6});
+    parte(lungoP(A.k,A.a,mezzaDi(pPolp),FR),lungoP(B.k,B.a,mezzaDi(pPolp),FR),["polpacci"],{k:.6});
+    parte(lungoP(A.k,A.a,mezzaAv(pPolp),FR),lungoP(B.k,B.a,mezzaAv(pPolp),FR),null,{k:.6});
+  
+    /* ---- pantaloncini ---- */
+    const pant=o=>{const g1=mix(o.p,o.k,.4);
+      const d=[o.k[0]-o.p[0],o.k[1]-o.p[1]],L=Math.hypot(d[0],d[1])||1;
+      const nx=d[1]/L, ny=-d[0]/L;
+      return [perp(o,.82,6.8),perp(o,.98,7.4),[g1[0]+nx*6.6,g1[1]+ny*6.6],[g1[0]-nx*6.4,g1[1]-ny*6.4],
+              perp(o,1.0,-8.6),perp(o,.86,-8)];};
+    parte(pant(A),pant(B),null,{col:PANT,bordo:PANT_L,piatto:1,sw:.8});
+  
+    /* ---- scarpa vicina ---- */
+    const pie=(o,fx,fy)=>{const v=pavan(o), u=[-v[1],v[0]];
+      return [o.a[0]+v[0]*fx+u[0]*fy, o.a[1]+v[1]*fx+u[1]*fy];};
+    const scarpa=o=>[pie(o,-4.2,-.5),pie(o,6.4,-.2),pie(o,7,5.2),pie(o,-4.6,5.2)];
+    parte(scarpa(A),scarpa(B),null,{col:SCARPA,bordo:SCARPA_L,piatto:1,sw:.7});
+    linea(pie(A,-4.4,3.8),pie(A,6.8,3.8),pie(B,-4.4,3.8),pie(B,6.8,3.8),1.4,"#5A6372");
+  
+    /* ---- braccio vicino ---- */
+    if(A.e&&A.w){
+      const sp=o=>[o.n[0]+1,o.n[1]+3];
+      parte(lungoP(sp(A),A.e,mezzaAv(pBraccio),FR),lungoP(sp(B),B.e,mezzaAv(pBraccio),FR),["bicipiti"],{k:.58});
+      parte(lungoP(sp(A),A.e,mezzaDi(pBraccio),FR),lungoP(sp(B),B.e,mezzaDi(pBraccio),FR),["tricipiti"],{k:.58});
+      parte(lungoP(A.e,A.w,pAvam,FR),lungoP(B.e,B.w,pAvam,FR),["avambracci"],{k:.62});
+      const delt=o=>{const s=sp(o);return lungoP([s[0]-1,s[1]-4.6],mix(s,o.e,.46),
+        [[0,2,2],[.3,5.6,5.6],[.64,5.2,5.2],[1,3.6,3.4]],FR);};
+      parte(delt(A),delt(B),["deltoidi","deltoidiPost"],{k:.62});
+      const mano=o=>[[o.w[0]-2.4,o.w[1]-1.4],[o.w[0]+2.6,o.w[1]-1.4],[o.w[0]+2.8,o.w[1]+2.4],[o.w[0]-2.6,o.w[1]+2.4]];
+      parte(mano(A),mano(B),null,{col:LUCE,k:.6});
+    }
+  
+    /* ---- collo, trapezio, testa ---- */
+    const trap=o=>[perp(o,-.02,-7),perp(o,-.14,-3.4),perp(o,-.1,2),perp(o,.02,5)];
+    parte(trap(A),trap(B),["trapezio"],{k:.6});
+    const dist=o=>Math.hypot(o.n[0]-o.h[0],o.n[1]-o.h[1])||1;
+    const collo=o=>[loc(o,3.4,dist(o)+1),loc(o,3.2,5.6),loc(o,-3.6,5.6),loc(o,-4,dist(o)+1)];
+    parte(collo(A),collo(B),null,{k:.7});
+    const testa=o=>[loc(o,-1,-6),loc(o,4.2,-4.2),loc(o,5.5,-1),loc(o,7,1.2),loc(o,5.1,2.4),
+                    loc(o,4.6,5.3),loc(o,.9,6.4),loc(o,-4,4.9),loc(o,-6,.4),loc(o,-5.1,-4.4)];
+    parte(testa(A),testa(B),null,{col:LUCE,k:.8});
+    const capelli=o=>[loc(o,-.8,-6.3),loc(o,4,-4.4),loc(o,4.6,-2.6),loc(o,1.6,-3.4),
+                      loc(o,-2.6,-2.4),loc(o,-5.6,2.2),loc(o,-6.2,-1),loc(o,-5.2,-4.6)];
+    parte(capelli(A),capelli(B),null,{col:CAPELLI,bordo:CAPELLI,piatto:1,sw:.7});
+    /* occhio e orecchio */
+    const oa=loc(A,3.8,-.4), ob=loc(B,3.8,-.4);
+    g+='<ellipse cx="'+oa[0].toFixed(1)+'" cy="'+oa[1].toFixed(1)+'" rx=".9" ry=".7" fill="'+BORDO+'">'+
+       an("cx",oa[0],ob[0])+an("cy",oa[1],ob[1])+"</ellipse>";
+    linea(loc(A,-1.4,.6),loc(A,-.2,2.4),loc(B,-1.4,.6),loc(B,-.2,2.4),.7,SEP);
+    return g;
+  }
 
   function ventre(p1, p2, w1, wm, w2){
     const dx = p2[0] - p1[0], dy = p2[1] - p1[1], L = Math.hypot(dx, dy) || 1;
@@ -796,77 +1018,268 @@ function anima(exId){
       (MAP[zona] || []).forEach(x => { if(mus.p.indexOf(x) >= 0) l = 2; else if(l < 1 && mus.s.indexOf(x) >= 0) l = 1; });
       return l;
     };
-    function pezzo(a1, a2, b1, b2, w1, wm, w2, zona, quote){
-      const l = liv(zona);
-      const da = ventre(a1, a2, w1, wm, w2), db = ventre(b1, b2, w1, wm, w2);
-      let o = '<path d="' + da + '" fill="' + BASE + '" stroke="' + BORDO + '" stroke-width="1.3" stroke-linejoin="round">' +
-        an("d", da, db) + (l ? an("fill", BASE, l === 2 ? ROSSO : ROSA) : "") + "</path>";
-      (quote || []).forEach(q => {
-        const pa = P(fibra(a1, a2, w1 * .68, w2 * .68, q)), pb = P(fibra(b1, b2, w1 * .68, w2 * .68, q));
-        o += '<polyline points="' + pa + '" fill="none" stroke="' + FIB + '" stroke-width=".9" stroke-linecap="round">' +
-          an("points", pa, pb) + (l ? an("stroke", FIB, FIB_ON) : "") + "</polyline>";
-      });
-      return o;
-    }
-    function tondo(c1, c2, r, zona){
-      const l = liv(zona);
-      return '<circle cx="' + c1[0] + '" cy="' + c1[1] + '" r="' + r + '" fill="' + BASE + '" stroke="' + BORDO +
-        '" stroke-width="1.3">' + an("cx", c1[0], c2[0]) + an("cy", c1[1], c2[1]) +
-        (l ? an("fill", BASE, l === 2 ? ROSSO : ROSA) : "") + "</circle>";
-    }
+    const ff = q => q[0].toFixed(1) + "," + q[1].toFixed(1);
+    const med = (a, b) => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+    /* contorno chiuso e morbido: la struttura del path dipende solo dal numero di
+       punti, quindi i due fotogrammi restano interpolabili dall'animazione */
+    const curva = pts => {
+      const k = pts.length;
+      let d = "M" + ff(med(pts[k - 1], pts[0]));
+      for(let i = 0; i < k; i++) d += " Q" + ff(pts[i]) + " " + ff(med(pts[i], pts[(i + 1) % k]));
+      return d + " Z";
+    };
+    /* restringe una forma verso il proprio centro: serve per la luce interna */
+    const verso = (pts, k) => {
+      let x = 0, y = 0;
+      pts.forEach(q => { x += q[0]; y += q[1]; });
+      x /= pts.length; y /= pts.length;
+      return pts.map(q => [x + (q[0] - x) * k, y + (q[1] - y) * k]);
+    };
+    /* punti del ventre muscolare lungo un segmento: prof = [quota, esterno, interno] */
+    const lungoP = (p1, p2, prof, lato) => {
+      const dx = p2[0] - p1[0], dy = p2[1] - p1[1], L = Math.hypot(dx, dy) || 1;
+      const nx = -dy / L, ny = dx / L;
+      const at = (t, w) => [p1[0] + dx * t + nx * w, p1[1] + dy * t + ny * w];
+      const fuori = [], dentro = [];
+      for(let i = 0; i < prof.length; i++){
+        fuori.push(at(prof[i][0], lato * prof[i][1]));
+        dentro.push(at(prof[i][0], -lato * prof[i][2]));
+      }
+      return fuori.concat(dentro.reverse());
+    };
+    const Q = (o, t) => mix(o.n, o.p, t);
+    const SP = (o, lato) => [o.n[0] + lato * 11, o.n[1] + 3];
     const L = A, R = B, Ls = spec(A), Rs = spec(B);
+
     let g = "";
-    // gambe
-    [[L, R], [Ls, Rs]].forEach(([a, b]) => {
-      g += pezzo(a.p, a.k, b.p, b.k, 15, 17, 11, "coscia", [-.22, .24]);
-      g += pezzo(a.k, a.a, b.k, b.a, 11, 12.5, 6.5, "polpaccio", [-.24, .26]);
-      g += pezzo(a.a, [a.a[0], a.a[1] + 6], b.a, [b.a[0], b.a[1] + 6], 7, 7, 8, "piede");
+    const parte = (dA, dB, zona, opt) => {
+      opt = opt || {};
+      const l = zona ? liv(zona) : 0;
+      const base = opt.col || OMBRA;
+      g += '<path d="' + dA + '" fill="' + base + '" stroke="' + (opt.bordo || BORDO) + '" stroke-width="' +
+        (opt.sw === undefined ? ".85" : opt.sw) + '" stroke-linejoin="round">' + an("d", dA, dB) +
+        (l ? an("fill", base, l === 2 ? ROSSO : ARANCIO) : "") + "</path>";
+    };
+    /* un muscolo: sagoma in ombra piu' la luce interna, come nelle tavole anatomiche */
+    const muscolo = (pa, pb, zona, k) => {
+      parte(curva(pa), curva(pb), zona);
+      const l = zona ? liv(zona) : 0;
+      const la = curva(verso(pa, k || .66)), lb = curva(verso(pb, k || .66));
+      g += '<path d="' + la + '" fill="' + LUCE + '" stroke="none">' + an("d", la, lb) +
+        (l ? an("fill", LUCE, l === 2 ? ROSSO_C : ARANCIO_C) : "") + "</path>";
+    };
+    const linea = (aA, bA, aB, bB, sw, col, acceso) => {
+      const pa = P([aA, bA]), pb = P([aB, bB]);
+      g += '<polyline points="' + pa + '" fill="none" stroke="' + (col || SEP) + '" stroke-width="' + (sw || .7) +
+        '" stroke-linecap="round">' + an("points", pa, pb) + (acceso ? an("stroke", col || SEP, SEP_ON) : "") + "</polyline>";
+    };
+    const LATI = [[L, R, -1], [Ls, Rs, 1]];
+
+    /* ---------- gambe ---------- */
+    const pCoscia = fronte
+      ? [[0, 5.2, 4.8], [.18, 7, 6], [.4, 7.4, 6.4], [.62, 6.4, 6.6], [.82, 4.7, 5.3], [1, 3.3, 3.3]]
+      : [[0, 5.8, 5.5], [.22, 7.3, 6.6], [.5, 7.2, 6.4], [.75, 5.8, 5.5], [1, 3.4, 3.4]];
+    const pPolp = [[0, 3.6, 3.6], [.14, 5.2, 4.9], [.32, 5.6, 5], [.55, 4.4, 3.8], [.78, 2.5, 2.3], [1, 2, 2]];
+    LATI.forEach(([a, b, s]) => {
+      muscolo(lungoP(a.p, a.k, pCoscia, s), lungoP(b.p, b.k, pCoscia, s), "coscia", .7);
+      muscolo(lungoP(a.k, a.a, pPolp, s), lungoP(b.k, b.a, pPolp, s), "polpaccio", .66);
     });
-    // bacino
-    g += tondo(L.p, R.p, 11, "bacino");
-    // busto
-    const va = mix(L.n, L.p, .46), vb = mix(R.n, R.p, .46);
-    g += pezzo(va, L.p, vb, R.p, 22, 20, 17, "addome", [-.4, -.13, .13, .4]);
-    const lAdd = liv("addome");
-    [0.24, 0.5, 0.76].forEach(t => {
-      const qa = P([mix(fibra(va, L.p, 16, 14, -.34)[0], fibra(va, L.p, 16, 14, -.34)[1], t),
-                    mix(fibra(va, L.p, 16, 14, .34)[0], fibra(va, L.p, 16, 14, .34)[1], t)]);
-      const qb = P([mix(fibra(vb, R.p, 16, 14, -.34)[0], fibra(vb, R.p, 16, 14, -.34)[1], t),
-                    mix(fibra(vb, R.p, 16, 14, .34)[0], fibra(vb, R.p, 16, 14, .34)[1], t)]);
-      g += '<polyline points="' + qa + '" fill="none" stroke="' + FIB + '" stroke-width=".9" stroke-linecap="round">' +
-        an("points", qa, qb) + (lAdd ? an("stroke", FIB, FIB_ON) : "") + "</polyline>";
+    const accCoscia = liv("coscia"), accPolp = liv("polpaccio");
+    LATI.forEach(([a, b, s]) => {
+      const sulla = (j1, j2) => (o, t, w) => {
+        const d = [o[j2][0] - o[j1][0], o[j2][1] - o[j1][1]], L2 = Math.hypot(d[0], d[1]) || 1;
+        return [o[j1][0] + d[0] * t - d[1] / L2 * w * s, o[j1][1] + d[1] * t + d[0] / L2 * w * s];
+      };
+      const qa = sulla("p", "k"), pa2 = sulla("k", "a");
+      if(fronte){
+        linea(qa(a, .22, 2.8), qa(a, .9, 3.4), qa(b, .22, 2.8), qa(b, .9, 3.4), .65, SEP, accCoscia);
+        linea(qa(a, .34, -2.2), qa(a, .82, -3.4), qa(b, .34, -2.2), qa(b, .82, -3.4), .65, SEP, accCoscia);
+        linea(qa(a, .5, 0), qa(a, .92, 0), qa(b, .5, 0), qa(b, .92, 0), .6, SEP, accCoscia);
+        linea(pa2(a, .22, -1.8), pa2(a, .74, -1), pa2(b, .22, -1.8), pa2(b, .74, -1), .6, SEP, accPolp);
+      } else {
+        linea(qa(a, .2, 0), qa(a, .9, 0), qa(b, .2, 0), qa(b, .9, 0), .65, SEP, accCoscia);
+        linea(pa2(a, .1, 0), pa2(a, .54, 0), pa2(b, .1, 0), pa2(b, .54, 0), .65, SEP, accPolp);
+        linea(pa2(a, .6, 0), pa2(a, .94, 0), pa2(b, .6, 0), pa2(b, .94, 0), .55, SEP, accPolp);
+      }
     });
-    g += pezzo(L.n, mix(L.n, L.p, .52), R.n, mix(R.n, R.p, .52), 30, 28, 24, "torace", [-.42, 0, .42]);
-    g += pezzo(L.n, mix(L.n, L.h, .55), R.n, mix(R.n, R.h, .55), 17, 14, 10, "trapezio", [-.3, .3]);
-    // braccia
-    [[L, R], [Ls, Rs]].forEach(([a, b]) => {
+
+    /* ---------- busto ---------- */
+    const busto = o => {
+      const cx = o.n[0], y = t => Q(o, t)[1];
+      return curva([
+        [cx - 13, o.n[1] + 3], [cx - 12, y(.2)], [cx - 10.5, y(.46)], [cx - 8.4, y(.72)],
+        [cx - 10.2, o.p[1] + 2], [cx + 10.2, o.p[1] + 2], [cx + 8.4, y(.72)], [cx + 10.5, y(.46)],
+        [cx + 12, y(.2)], [cx + 13, o.n[1] + 3], [cx + 7, o.n[1] - 3], [cx - 7, o.n[1] - 3]
+      ]);
+    };
+    parte(busto(L), busto(R), null);
+
+    if(fronte){
+      const pett = (o, s) => { const cx = o.n[0], y0 = o.n[1] + 4, y1 = Q(o, .34)[1];
+        return [[cx + s * 1.3, y0], [cx + s * 7, o.n[1] + 3.5], [cx + s * 11.5, o.n[1] + 6],
+                [cx + s * 11, y1 - 2.5], [cx + s * 7, y1], [cx + s * 1.3, y1 - 1.2]]; };
+      [-1, 1].forEach(s => muscolo(pett(L, s), pett(R, s), "torace", .72));
+      const accPett = liv("torace");
+      [-1, 1].forEach(s => {
+        const u = o => [o.n[0] + s * 3.2, o.n[1] + 6.5], v = o => [o.n[0] + s * 9.5, o.n[1] + 8];
+        linea(u(L), v(L), u(R), v(R), .55, SEP, accPett);
+        /* dentato anteriore: tre dita sotto il pettorale */
+        [0, 1, 2].forEach(i => {
+          const q1 = o => [o.n[0] + s * (9.8 - i * .4), Q(o, .34)[1] + i * 2.1];
+          const q2 = o => [o.n[0] + s * (6.6 - i * .5), Q(o, .34)[1] + 1.4 + i * 2.1];
+          linea(q1(L), q2(L), q1(R), q2(R), .5, SEP);
+        });
+      });
+      const retto = o => { const cx = o.n[0], y0 = Q(o, .35)[1], y1 = o.p[1] - 1, ym = (y0 + y1) / 2;
+        return [[cx - 5.8, y0], [cx - 6.4, ym], [cx - 4.5, y1], [cx + 4.5, y1], [cx + 6.4, ym], [cx + 5.8, y0]]; };
+      muscolo(retto(L), retto(R), "addome", .78);
+      const obl = (o, s) => { const cx = o.n[0], y0 = Q(o, .46)[1], y1 = o.p[1] - 1;
+        return [[cx + s * 6.2, y0], [cx + s * 9.5, y0 + 1.6], [cx + s * 8.4, y1 - 1.6], [cx + s * 5.6, y1]]; };
+      [-1, 1].forEach(s => muscolo(obl(L, s), obl(R, s), "addome", .64));
+      const accAdd = liv("addome");
+      [.26, .5, .74].forEach(t => {
+        const u = o => [o.n[0] - 5.5, Q(o, .35)[1] + (o.p[1] - 1 - Q(o, .35)[1]) * t];
+        const v = o => [o.n[0] + 5.5, Q(o, .35)[1] + (o.p[1] - 1 - Q(o, .35)[1]) * t];
+        linea(u(L), v(L), u(R), v(R), .6, SEP, accAdd);
+      });
+      linea([L.n[0], Q(L, .36)[1]], [L.n[0], L.p[1] - 2], [R.n[0], Q(R, .36)[1]], [R.n[0], R.p[1] - 2], .6, SEP, accAdd);
+      const trapF = (o, s) => [[o.n[0], o.n[1] - 4], [o.n[0] + s * 10, o.n[1] + 2],
+                               [o.n[0] + s * 4, o.n[1] + 4.5], [o.n[0], o.n[1] + 2.5]];
+      [-1, 1].forEach(s => muscolo(trapF(L, s), trapF(R, s), "trapezio", .6));
+    } else {
+      const trapR = o => { const cx = o.n[0];
+        return [[cx, o.n[1] - 5], [cx + 11.5, o.n[1] + 2.5], [cx + 4.7, Q(o, .3)[1]],
+                [cx, Q(o, .42)[1]], [cx - 4.7, Q(o, .3)[1]], [cx - 11.5, o.n[1] + 2.5]]; };
+      muscolo(trapR(L), trapR(R), "trapezio", .66);
+      const dors = (o, s) => { const cx = o.n[0];
+        return [[cx + s * 3, o.n[1] + 7], [cx + s * 12, o.n[1] + 10], [cx + s * 10.5, Q(o, .48)[1]],
+                [cx + s * 4, Q(o, .74)[1]], [cx + s * 2, Q(o, .5)[1]]]; };
+      [-1, 1].forEach(s => muscolo(dors(L, s), dors(R, s), "torace", .68));
+      const accDor = liv("torace");
+      [-1, 1].forEach(s => {
+        const u = o => [o.n[0] + s * 9, o.n[1] + 13], v = o => [o.n[0] + s * 4.5, Q(o, .6)[1]];
+        linea(u(L), v(L), u(R), v(R), .55, SEP, accDor);
+        /* romboide sotto il trapezio */
+        const r1 = o => [o.n[0] + s * 2, Q(o, .2)[1]], r2 = o => [o.n[0] + s * 7.5, Q(o, .1)[1]];
+        linea(r1(L), r2(L), r1(R), r2(R), .5, SEP);
+      });
+      const err = (o, s) => { const cx = o.n[0];
+        return [[cx + s * 1.2, Q(o, .54)[1]], [cx + s * 4.4, Q(o, .62)[1]],
+                [cx + s * 4.4, o.p[1] - 2], [cx + s * 1.2, o.p[1] - 1]]; };
+      [-1, 1].forEach(s => muscolo(err(L, s), err(R, s), "addome", .66));
+      linea([L.n[0], L.n[1] + 5], [L.n[0], L.p[1] - 1], [R.n[0], R.n[1] + 5], [R.n[0], R.p[1] - 1], .65, SEP);
+    }
+
+    /* ---------- braccia ---------- */
+    const pBraccio = fronte
+      ? [[0, 4.2, 3.7], [.3, 4.8, 4.2], [.56, 4.7, 4], [.8, 3.6, 3.2], [1, 2.7, 2.7]]
+      : [[0, 4.5, 3.9], [.34, 5, 4.3], [.7, 4, 3.5], [1, 2.7, 2.7]];
+    const pAvam = [[0, 3.6, 3.4], [.22, 4.1, 3.8], [.5, 3.4, 3.1], [.8, 2.3, 2.2], [1, 1.8, 1.8]];
+    const pDelt = [[0, 2, 2], [.3, 5.8, 5], [.64, 5.5, 4.5], [1, 3.6, 3.3]];
+    LATI.forEach(([a, b, s]) => {
       if(!a.e || !a.w) return;
-      g += tondo([a.n[0] + (a.e[0] > a.n[0] ? 11 : -11), a.n[1] + 2], [b.n[0] + (b.e[0] > b.n[0] ? 11 : -11), b.n[1] + 2], 8.5, "spalla");
-      g += pezzo([a.n[0] + (a.e[0] > a.n[0] ? 11 : -11), a.n[1] + 2], a.e,
-                 [b.n[0] + (b.e[0] > b.n[0] ? 11 : -11), b.n[1] + 2], b.e, 10, 12, 8, "braccio", [-.26, .28]);
-      g += pezzo(a.e, a.w, b.e, b.w, 8.5, 9.5, 5.5, "avambraccio", [.26]);
-      g += tondo(a.w, b.w, 4.4, "mano");
+      muscolo(lungoP(SP(a, s), a.e, pBraccio, s), lungoP(SP(b, s), b.e, pBraccio, s), "braccio", .66);
+      muscolo(lungoP(a.e, a.w, pAvam, s), lungoP(b.e, b.w, pAvam, s), "avambraccio", .66);
+      /* il deltoide copre l'attacco del braccio, come in anatomia */
+      const delt = o => { const sp = SP(o, s); return lungoP([sp[0] + s * .8, sp[1] - 4.5], mix(sp, o.e, .46), pDelt, s); };
+      muscolo(delt(a), delt(b), "spalla", .62);
+      /* i tre capi del deltoide */
+      const d1 = o => mix(SP(o, s), o.e, .06), d2 = o => mix(SP(o, s), o.e, .44);
+      linea(d1(a), d2(a), d1(b), d2(b), .5, SEP);
+      const mano = o => curva([[o.w[0] - 2.4, o.w[1] - 1.4], [o.w[0] + 2.4, o.w[1] - 1.4],
+                               [o.w[0] + 2.7, o.w[1] + 2.2], [o.w[0] - 2.7, o.w[1] + 2.2]]);
+      parte(mano(a), mano(b), "mano", {col: LUCE});
+      linea([a.w[0] - 1.4, a.w[1] - .6], [a.w[0] - 1.4, a.w[1] + 1.8],
+            [b.w[0] - 1.4, b.w[1] - .6], [b.w[0] - 1.4, b.w[1] + 1.8], .5, SEP);
+      linea([a.w[0] + 1.4, a.w[1] - .6], [a.w[0] + 1.4, a.w[1] + 1.8],
+            [b.w[0] + 1.4, b.w[1] - .6], [b.w[0] + 1.4, b.w[1] + 1.8], .5, SEP);
+      const u = o => mix(SP(o, s), o.e, .38), v = o => mix(SP(o, s), o.e, .82);
+      linea(u(a), v(a), u(b), v(b), .55, SEP, liv("braccio"));
     });
-    // collo e testa
-    g += pezzo(L.n, L.h, R.n, R.h, 9, 8.5, 8, "collo");
-    g += tondo(L.h, R.h, 9, "testa");
+
+    /* ---------- scarpe ---------- */
+    LATI.forEach(([a, b, s]) => {
+      const scarpa = o => curva([[o.a[0] - 3.6, o.a[1] - .5], [o.a[0] + 3.6, o.a[1] - .5],
+                                 [o.a[0] + 4.2, o.a[1] + 5.2], [o.a[0] - 4.2, o.a[1] + 5.2]]);
+      parte(scarpa(a), scarpa(b), null, {col: SCARPA, bordo: SCARPA_L, sw: .7});
+      linea([a.a[0] - 3.9, a.a[1] + 3.8], [a.a[0] + 3.9, a.a[1] + 3.8],
+            [b.a[0] - 3.9, b.a[1] + 3.8], [b.a[0] + 3.9, b.a[1] + 3.8], 1.1, SCARPA_L);
+      if(fronte) linea([a.a[0] - 2.6, a.a[1] + 2.2], [a.a[0] + 2.6, a.a[1] + 2.2],
+                       [b.a[0] - 2.6, b.a[1] + 2.2], [b.a[0] + 2.6, b.a[1] + 2.2], 1.6, "#5A6372");
+      else linea([a.a[0], a.a[1] + .2], [a.a[0], a.a[1] + 3.4],
+                 [b.a[0], b.a[1] + .2], [b.a[0], b.a[1] + 3.4], 1.4, "#5A6372");
+    });
+
+    /* ---------- pantaloncini ---------- */
+    const pant = o => {
+      const cx = o.n[0], yt = Q(o, .8)[1];
+      const g1 = mix(o.p, o.k, .34), g2 = [MIR(g1[0]), g1[1]];
+      return curva([[cx - 10.4, yt], [cx - 11.6, o.p[1] + 1], [g1[0] - 6.4, g1[1] + 2], [cx - 2.4, g1[1] + 1],
+                    [cx, o.p[1] + 5], [cx + 2.4, g1[1] + 1], [g2[0] + 6.4, g2[1] + 2],
+                    [cx + 11.6, o.p[1] + 1], [cx + 10.4, yt]]);
+    };
+    parte(pant(L), pant(R), null, {col: PANT, bordo: PANT_L, sw: .8});
+    /* cintura e piega laterale */
+    linea([L.n[0] - 10, Q(L, .84)[1]], [L.n[0] + 10, Q(L, .84)[1]],
+          [R.n[0] - 10, Q(R, .84)[1]], [R.n[0] + 10, Q(R, .84)[1]], .9, PANT_L);
+    if(!fronte) linea([L.n[0], Q(L, .86)[1]], [L.n[0], L.p[1] + 4],
+                      [R.n[0], Q(R, .86)[1]], [R.n[0], R.p[1] + 4], .8, PANT_L);
+    if(!fronte){
+      const glu = (o, s) => { const cx = o.n[0];
+        return curva([[cx + s * 1.2, o.p[1] - 6], [cx + s * 9, o.p[1] - 5], [cx + s * 9.4, o.p[1] + 2],
+                      [cx + s * 1.6, o.p[1] + 3]]); };
+      [-1, 1].forEach(s => parte(glu(L, s), glu(R, s), "bacino", {col: PANT, bordo: PANT_L, sw: .8}));
+    }
+
+    /* ---------- collo e testa ---------- */
+    const collo = o => curva([[o.n[0] - 4, o.n[1] + 1], [o.n[0] - 3.4, o.h[1] + 4.5],
+                              [o.n[0] + 3.4, o.h[1] + 4.5], [o.n[0] + 4, o.n[1] + 1]]);
+    parte(collo(L), collo(R), "collo");
+    const testa = o => curva([[o.h[0] - 4.8, o.h[1] - 4.6], [o.h[0] + 4.8, o.h[1] - 4.6],
+                              [o.h[0] + 5.2, o.h[1] + 1.4], [o.h[0] + 2.8, o.h[1] + 6.2],
+                              [o.h[0] - 2.8, o.h[1] + 6.2], [o.h[0] - 5.2, o.h[1] + 1.4]]);
+    parte(testa(L), testa(R), null, {col: fronte ? LUCE : CAPELLI, bordo: fronte ? BORDO : CAPELLI});
+    const capelli = o => fronte
+      ? curva([[o.h[0] - 5.2, o.h[1] - .4], [o.h[0] - 4.8, o.h[1] - 4.8], [o.h[0], o.h[1] - 6.4],
+               [o.h[0] + 4.8, o.h[1] - 4.8], [o.h[0] + 5.2, o.h[1] - .4],
+               [o.h[0] + 2.6, o.h[1] - 2.4], [o.h[0], o.h[1] - 1.8], [o.h[0] - 2.6, o.h[1] - 2.4]])
+      : curva([[o.h[0] - 5.4, o.h[1] + 2.4], [o.h[0] - 5.1, o.h[1] - 4], [o.h[0], o.h[1] - 6.4],
+               [o.h[0] + 5.1, o.h[1] - 4], [o.h[0] + 5.4, o.h[1] + 2.4],
+               [o.h[0] + 3.2, o.h[1] + 4.4], [o.h[0] - 3.2, o.h[1] + 4.4]]);
+    parte(capelli(L), capelli(R), null, {col: fronte ? CAPELLI : "#3A404C", bordo: CAPELLI, sw: .7});
+    /* orecchio */
+    [-1, 1].forEach(s => {
+      const or1 = o => [o.h[0] + s * 5, o.h[1] + .2], or2 = o => [o.h[0] + s * 4.4, o.h[1] + 2.6];
+      linea(or1(L), or2(L), or1(R), or2(R), .7, fronte ? SEP : "#4A5160"); });
+    if(fronte){
+      const occhio = s => '<ellipse cx="' + (L.h[0] + s * 2.1).toFixed(1) + '" cy="' + (L.h[1] + 1).toFixed(1) +
+        '" rx="1" ry=".75" fill="' + BORDO + '">' + an("cx", L.h[0] + s * 2.1, R.h[0] + s * 2.1) +
+        an("cy", L.h[1] + 1, R.h[1] + 1) + "</ellipse>";
+      g += occhio(-1) + occhio(1);
+      [-1, 1].forEach(s => linea([L.h[0] + s * 3.2, L.h[1] - .9], [L.h[0] + s * 1.2, L.h[1] - 1.3],
+                                 [R.h[0] + s * 3.2, R.h[1] - .9], [R.h[0] + s * 1.2, R.h[1] - 1.3], .7, "#6B7686"));
+      linea([L.h[0] - 1.3, L.h[1] + 3.8], [L.h[0] + 1.3, L.h[1] + 3.8],
+            [R.h[0] - 1.3, R.h[1] + 3.8], [R.h[0] + 1.3, R.h[1] + 3.8], .7, "#7E8795");
+      [-1, 1].forEach(s => linea([L.h[0] + s * 2.8, L.h[1] + 5.4], [L.n[0] + s * 4.2, L.n[1] + 1.5],
+                                 [R.h[0] + s * 2.8, R.h[1] + 5.4], [R.n[0] + s * 4.2, R.n[1] + 1.5], .55, SEP));
+    }
     return g;
   }
 
   function traccia(o){
     const l = (p1, p2, w1, wm, w2) => '<path d="' + ventre(p1, p2, w1, wm, w2) +
-      '" fill="none" stroke="#D3D3CE" stroke-width="1" stroke-dasharray="3 2.5"/>';
+      '" fill="none" stroke="#49586F" stroke-width="1" stroke-dasharray="2.5 2.5"/>';
     const os = spec(o);
     let g = "";
     [o, os].forEach(q => {
-      g += l(q.p, q.k, 15, 17, 11) + l(q.k, q.a, 11, 12.5, 6.5);
-      if(q.e && q.w) g += l([q.n[0] + (q.e[0] > q.n[0] ? 11 : -11), q.n[1] + 2], q.e, 10, 12, 8) + l(q.e, q.w, 8.5, 9.5, 5.5);
+      g += l(q.p, q.k, 10, 14, 6.6) + l(q.k, q.a, 7.2, 11, 4);
+      if(q.e && q.w) g += l([q.n[0] + (q.e[0] > q.n[0] ? 11 : -11), q.n[1] + 2], q.e, 8, 9.5, 5.4) + l(q.e, q.w, 7, 7.6, 3.6);
     });
-    g += l(mix(o.n, o.p, .46), o.p, 22, 20, 17) + l(o.n, mix(o.n, o.p, .52), 30, 28, 24);
-    g += '<circle cx="' + o.h[0] + '" cy="' + o.h[1] + '" r="9" fill="none" stroke="#D3D3CE" stroke-width="1" stroke-dasharray="3 2.5"/>';
+    g += l(mix(o.n, o.p, .46), o.p, 19, 17, 20) + l(o.n, mix(o.n, o.p, .52), 25, 23, 20);
+    g += '<circle cx="' + o.h[0] + '" cy="' + o.h[1] + '" r="5.4" fill="none" stroke="#49586F" stroke-width="1" stroke-dasharray="2.5 2.5"/>';
     return g;
   }
-  function freccia(){
+  function freccia(A, B){
     let best = null, d = 0;
     ["w","p","k","a","e","h"].forEach(j => {
       if(!A[j] || !B[j]) return;
@@ -883,9 +1296,9 @@ function anima(exId){
     const q = (r, g2) => [e[0] - r * Math.cos(ang - g2), e[1] - r * Math.sin(ang - g2)];
     const a1 = q(6.5, .45), a2 = q(6.5, -.45);
     return '<line x1="' + s[0].toFixed(1) + '" y1="' + s[1].toFixed(1) + '" x2="' + e[0].toFixed(1) + '" y2="' + e[1].toFixed(1) +
-      '" stroke="#4A4A47" stroke-width="1.5" stroke-dasharray="4 3"/>' +
+      '" stroke="#9FB0C8" stroke-width="1.5" stroke-dasharray="4 3"/>' +
       '<polygon points="' + e[0].toFixed(1) + "," + e[1].toFixed(1) + " " + a1[0].toFixed(1) + "," + a1[1].toFixed(1) +
-      " " + a2[0].toFixed(1) + "," + a2[1].toFixed(1) + '" fill="#4A4A47"/>';
+      " " + a2[0].toFixed(1) + "," + a2[1].toFixed(1) + '" fill="#9FB0C8"/>';
   }
 
   /* attrezzi, tutti grigi e centrati sull'asse del corpo */
@@ -900,8 +1313,13 @@ function anima(exId){
   const dlt = (a, b) => (b[0] - a[0]).toFixed(1) + " " + (b[1] - a[1]).toFixed(1);
   const mobile = (cont, a, b) => "<g>" + cont + '<animateTransform attributeName="transform" type="translate" values="0 0;0 0;' +
     dlt(a, b) + ";" + dlt(a, b) + ';0 0" dur="' + dur + '" ' + KT + "/></g>";
-  function barraC(y){
-    let o = '<rect x="16" y="' + (y - 2.6) + '" width="92" height="5.2" rx="2.6" fill="' + MET + '"/>';
+  function barraC(y, taglio){
+    /* taglio = meta' larghezza del corpo a quell'altezza: la barra che passa
+       dietro sparisce li' dentro e riappare dall'altra parte */
+    let o = taglio
+      ? '<rect x="16" y="' + (y - 2.6) + '" width="' + (46 - taglio) + '" height="5.2" rx="2.6" fill="' + MET + '"/>' +
+        '<rect x="' + (62 + taglio) + '" y="' + (y - 2.6) + '" width="' + (46 - taglio) + '" height="5.2" rx="2.6" fill="' + MET + '"/>'
+      : '<rect x="16" y="' + (y - 2.6) + '" width="92" height="5.2" rx="2.6" fill="' + MET + '"/>';
     [[34, 5.5], [28, 5], [22, 4.5]].forEach(([hh, w1], i) => {
       o += '<rect x="' + (16 + i * 5.8) + '" y="' + (y - hh / 2) + '" width="' + w1 + '" height="' + hh + '" rx="1.6" fill="' + MET_S + '"/>';
       o += '<rect x="' + (108 - (i + 1) * 5.8) + '" y="' + (y - hh / 2) + '" width="' + w1 + '" height="' + hh + '" rx="1.6" fill="' + MET_S + '"/>';
@@ -917,17 +1335,24 @@ function anima(exId){
     };
     return hex(y - 8, 6.5) + hex(y + 8, 6.5) + '<rect x="' + (x - 2) + '" y="' + (y - 8.5) + '" width="4" height="17" fill="' + MET + '"/>';
   }
+  const attrezzo = vistaFronte => {
+  const coperto = !sopraAlCorpo(vistaFronte);
   let eqv = "";
-  if(tipo === "barraSpalle") eqv = mobile(barraC(A.n[1] - 4), A.n, B.n);
-  else if(tipo === "barra") eqv = mobile(barraC(A.w[1]), A.w, B.w);
+  if(tipo === "barraSpalle") eqv = mobile(barraC(A.n[1] + 2, coperto ? 18 : 0), A.n, B.n);
+  else if(tipo === "barra") eqv = mobile(barraC(A.w[1], coperto ? 15 : 0), A.w, B.w);
   else if(tipo === "manubri"){
     eqv = mobile(manubrioA(A.w), A.w, B.w) + mobile(manubrioA([MIR(A.w[0]), A.w[1]]), [MIR(A.w[0]), A.w[1]], [MIR(B.w[0]), B.w[1]]);
   } else if(tipo === "cavo"){
     const alto = pat === "tirataVert" || pat === "pressoVert" || pat === "tricipiti";
-    const a0 = alto ? [62, 6] : [62, 128];
+    const laterale = pat === "apertura";
+    const a0 = laterale ? [2, A.n[1] + 2] : (alto ? [62, 6] : [62, 128]);
+    const a0b = laterale ? [MIR(a0[0]), a0[1]] : a0;
     const pa1 = P([a0, A.w]), pb1 = P([a0, B.w]);
-    const pa2 = P([a0, [MIR(A.w[0]), A.w[1]]]), pb2 = P([a0, [MIR(B.w[0]), B.w[1]]]);
-    eqv = '<rect x="51" y="' + (alto ? 0 : 118) + '" width="22" height="14" rx="2" fill="' + MET_C + '" stroke="' + MET + '" stroke-width=".8"/>' +
+    const pa2 = P([a0b, [MIR(A.w[0]), A.w[1]]]), pb2 = P([a0b, [MIR(B.w[0]), B.w[1]]]);
+    eqv = (laterale
+      ? '<rect x="0" y="' + (A.n[1] - 6) + '" width="8" height="16" rx="2" fill="' + MET_C + '" stroke="' + MET + '" stroke-width=".8"/>' +
+        '<rect x="116" y="' + (A.n[1] - 6) + '" width="8" height="16" rx="2" fill="' + MET_C + '" stroke="' + MET + '" stroke-width=".8"/>'
+      : '<rect x="51" y="' + (alto ? 0 : 118) + '" width="22" height="14" rx="2" fill="' + MET_C + '" stroke="' + MET + '" stroke-width=".8"/>') +
       '<polyline points="' + pa1 + '" fill="none" stroke="' + MET_S + '" stroke-width="1.5">' + an("points", pa1, pb1) + "</polyline>" +
       '<polyline points="' + pa2 + '" fill="none" stroke="' + MET_S + '" stroke-width="1.5">' + an("points", pa2, pb2) + "</polyline>";
   } else if(tipo === "macchina"){
@@ -941,20 +1366,110 @@ function anima(exId){
       '<rect x="84" y="70" width="26" height="5" rx="2.5" fill="' + MET + '"/>' +
       '<rect x="20" y="74" width="5" height="44" fill="' + MET_C + '"/><rect x="99" y="74" width="5" height="44" fill="' + MET_C + '"/>';
   }
-  let scena = '<line x1="4" y1="120" x2="120" y2="120" stroke="#C7C7C2" stroke-width="2.5"/>';
-  if(M.panca) scena += '<rect x="44" y="30" width="36" height="86" rx="5" fill="' + MET_C + '" stroke="' + MET + '" stroke-width=".8"/>';
-  const dietro = tipo === "sbarra" || tipo === "parallele" || tipo === "macchina" || tipo === "cavo";
+  return eqv;
+  };
+  /* ---- attrezzi nella vista di profilo ---- */
+  function attrezzoLato(LA, LB){
+    const disco = (ca, cb) =>
+      '<circle cx="' + ca[0] + '" cy="' + ca[1] + '" r="9.4" fill="' + MET_S + '" stroke="#6C7988" stroke-width="1">' +
+      an("cx", ca[0], cb[0]) + an("cy", ca[1], cb[1]) + "</circle>" +
+      '<circle cx="' + ca[0] + '" cy="' + ca[1] + '" r="3.4" fill="' + MET + '">' +
+      an("cx", ca[0], cb[0]) + an("cy", ca[1], cb[1]) + "</circle>";
+    const manubrio = (ca, cb) =>
+      '<rect x="' + (ca[0] - 4) + '" y="' + (ca[1] - 3.4) + '" width="8" height="6.8" rx="2" fill="' + MET_S + '">' +
+      an("x", ca[0] - 4, cb[0] - 4) + an("y", ca[1] - 3.4, cb[1] - 3.4) + "</rect>";
+    const barretta = (ca, cb, w) =>
+      '<rect x="' + (ca[0] - w / 2) + '" y="' + (ca[1] - 2.2) + '" width="' + w + '" height="4.4" rx="2.2" fill="' + MET + '">' +
+      an("x", ca[0] - w / 2, cb[0] - w / 2) + an("y", ca[1] - 2.2, cb[1] - 2.2) + "</rect>";
+    const telaio = (x, y, w, h) => '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h +
+      '" rx="2.5" fill="#2A3A52" stroke="' + MET + '" stroke-width=".9"/>';
+    let fondo = "", mano = "";
+    /* panche, sedili e telai: stanno sotto il corpo */
+    if(pat === "pressoOrizz" || pat === "apertura")
+      fondo = telaio(34, 92, 54, 5) + telaio(44, 96, 5, 24) + telaio(76, 96, 5, 24);
+    else if(pat === "pressoIncl")
+      fondo = '<polygon points="34,112 40,118 86,76 80,70" fill="#2A3A52" stroke="' + MET + '" stroke-width=".9"/>' +
+        telaio(36, 112, 22, 8);
+    else if(pat === "ponte") fondo = telaio(64, 88, 28, 5) + telaio(70, 92, 5, 28);
+    else if(pat === "legKnee") fondo = telaio(28, 90, 32, 5) + telaio(30, 62, 5, 30) + telaio(34, 94, 5, 26) +
+      '<rect x="' + (LA.a[0] - 4) + '" y="' + (LA.a[1] - 7) + '" width="8" height="14" rx="3" fill="#2A3A52" stroke="' + MET +
+      '" stroke-width=".9">' + an("x", LA.a[0] - 4, LB.a[0] - 4) + an("y", LA.a[1] - 7, LB.a[1] - 7) + "</rect>";
+    else if(pat === "bici") fondo = telaio(30, 96, 5, 24) + telaio(40, 84, 24, 5) +
+      '<circle cx="66" cy="107" r="8" fill="none" stroke="' + MET + '" stroke-width="1.4"/>' +
+      '<circle cx="66" cy="107" r="1.8" fill="' + MET + '"/>';
+    else if(pat === "voga") fondo = telaio(30, 96, 70, 5) + telaio(36, 86, 22, 10) +
+      barretta(LA.w, LB.w, 11);
+    else if(pat === "corsa") fondo = telaio(14, 114, 96, 6);
+    else if(tipo === "sbarra") fondo = '<rect x="12" y="' + (LA.w[1] - 2.6) + '" width="100" height="5.2" rx="2.6" fill="' + MET + '"/>';
+    else if(tipo === "parallele") fondo = barretta(LA.w, LA.w, 34) + telaio(LA.w[0] - 2, LA.w[1] + 3, 4, 118 - LA.w[1]);
+    else if(tipo === "macchina") fondo = telaio(28, 90, 32, 5) + telaio(30, 62, 5, 30);
+    /* carichi: stanno nelle mani, quindi davanti. Dove l'attrezzo e' la macchina
+       stessa non c'e' nulla da impugnare, e un cavo addosso confonderebbe. */
+    const propriaMacchina = pat === "bici" || pat === "voga" || pat === "corsa" ||
+      pat === "legKnee" || pat === "polpacci";
+    if(propriaMacchina && (tipo === "cavo" || tipo === "macchina")) return {fondo: fondo, mano: ""};
+    if(tipo === "barraSpalle"){
+      const ca = [LA.n[0] - 3, LA.n[1] + 3], cb = [LB.n[0] - 3, LB.n[1] + 3];
+      mano = disco(ca, cb);
+    } else if(tipo === "barra") mano = disco(LA.w, LB.w);
+    else if(tipo === "manubri") mano = manubrio(LA.w, LB.w);
+    else if(tipo === "cavo"){
+      const alto = pat === "tirataVert" || pat === "pressoVert" || pat === "tricipiti";
+      /* la puleggia sta davanti all'atleta: cosi' il cavo non gli taglia il busto */
+      const a0 = alto ? [LA.n[0] + 21, 7] : [LA.n[0] + 27, 115];
+      const pa = P([a0, LA.w]), pb = P([a0, LB.w]);
+      fondo += '<rect x="' + (a0[0] - 6) + '" y="' + (alto ? 1 : 110) + '" width="12" height="11" rx="2" fill="' + MET_C +
+        '" stroke="' + MET + '" stroke-width=".8"/>';
+      mano = '<polyline points="' + pa + '" fill="none" stroke="' + MET_S + '" stroke-width="1.5">' +
+        an("points", pa, pb) + "</polyline>";
+    }
+    return {fondo: fondo, mano: mano};
+  }
 
-  const pannello = (dx, fronte, etichetta) =>
-    '<g transform="translate(' + dx + ',0)">' + scena + (dietro ? eqv : "") + traccia(B) + figura(fronte) +
-    (dietro ? "" : eqv) + freccia() +
-    '<text x="62" y="134" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#5A5A56">' +
-    etichetta + "</text></g>";
+  let scena = '<ellipse cx="62" cy="121" rx="40" ry="4.4" fill="url(#' + UID + 'o)"/>' +
+    '<line x1="8" y1="120" x2="116" y2="120" stroke="#3A4A66" stroke-width="1.6"/>';
+  const pancaFronte = M.panca ? '<rect x="44" y="30" width="36" height="86" rx="5" fill="#2A3A52" stroke="' + MET + '" stroke-width=".8"/>' : "";
+  /* dove sta l'attrezzo rispetto al corpo. Chi lo tiene dietro la nuca lo vede
+     solo di spalle: di fronte restano fuori i dischi, il resto sparisce dietro il busto. */
+  const impugnatoDavanti = tipo === "barra" || tipo === "manubri" || tipo === "cavo";
+  const soloSfondo = tipo === "sbarra" || tipo === "parallele" || tipo === "macchina";
+  const sopraAlCorpo = vistaFronte => soloSfondo ? false : (vistaFronte ? impugnatoDavanti : !impugnatoDavanti);
 
-  return '<svg viewBox="0 0 254 138" width="100%" style="max-width:330px;display:block;margin:0 auto" ' +
-    'role="img" aria-label="Esecuzione di ' + esc((EX[exId] || {}).n || "") + ', vista di spalle e di fronte">' +
-    pannello(0, false, "Di spalle") + pannello(130, true, "Di fronte") +
-    '<line x1="126" y1="10" x2="126" y2="122" stroke="#E2E2DD" stroke-width="1"/></svg>';
+  /* Le viste che spiegano il movimento, scelte per schema. Se manca la posa
+     laterale si ripiega sul piano frontale. */
+  const LA = LATO[pat];
+  let viste = (VISTE[pat] || ["fronte", "retro"]).filter(v => v !== "lato" || LA);
+  if(!viste.length) viste = ["fronte"];
+  const ETI = {fronte: "DI FRONTE", retro: "DI SPALLE", lato: "DI LATO"};
+
+  const pannello = (dx, vista) => {
+    let dentro;
+    if(vista === "lato"){
+      const eq = attrezzoLato(LA.a, LA.b);
+      dentro = scena + eq.fondo + figuraLato(LA.a, LA.b) + eq.mano + freccia(LA.a, LA.b);
+    } else {
+      const fronte = vista === "fronte";
+      const sopra = sopraAlCorpo(fronte);
+      dentro = scena + pancaFronte + (sopra ? "" : attrezzo(fronte)) + traccia(B) +
+        figura(fronte) + (sopra ? attrezzo(fronte) : "") + freccia(A, B);
+    }
+    return '<g transform="translate(' + dx + ',0)">' +
+      '<rect x="1" y="1" width="122" height="136" rx="7" fill="' + FONDO + '" stroke="' + CORNICE + '" stroke-width="1.1"/>' +
+      dentro +
+      '<rect x="32" y="123" width="60" height="12" rx="3" fill="' + CHIP + '"/>' +
+      '<text x="62" y="131.4" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7.2" ' +
+      'font-weight="700" letter-spacing=".7" fill="#FFFFFF">' + ETI[vista] + "</text></g>";
+  };
+
+  const larg = viste.length * 124 + (viste.length - 1) * 6;
+  const etich = viste.map(v => ETI[v].toLowerCase()).join(" e ");
+  return '<svg viewBox="0 0 ' + larg + ' 138" width="100%" style="max-width:' +
+    (viste.length > 1 ? 330 : 212) + 'px;display:block;margin:0 auto" ' +
+    'role="img" aria-label="Esecuzione di ' + esc((EX[exId] || {}).n || "") + ', vista ' + etich + '">' +
+    '<defs><radialGradient id="' + UID + 'o" cx=".5" cy=".5" r=".5">' +
+    '<stop offset="0" stop-color="#0A1120" stop-opacity=".75"/>' +
+    '<stop offset="1" stop-color="#0A1120" stop-opacity="0"/></radialGradient></defs>' +
+    viste.map((v, i) => pannello(i * 130, v)).join("") + "</svg>";
 }
 
 
@@ -1034,7 +1549,7 @@ function muscoli(exId){
 function sagoma(exId){
   const m = muscoli(exId);
   if(!m) return "";
-  const acceso = "#C0392B", tiepido = "#E6A199", spento = "#C9CBC2", neutro = "#D8DAD2", linea = "#AFB3A8";
+  const acceso = "#E8502A", tiepido = "#F09050", spento = "#C9CBC2", neutro = "#D8DAD2", linea = "#AFB3A8";
   const c = id => m.p.indexOf(id) >= 0 ? acceso : m.s.indexOf(id) >= 0 ? tiepido : spento;
   const q = (id, d) => '<path d="' + d + '" fill="' + c(id) + '" stroke="' + linea + '" stroke-width=".7"/>';
   const n = d => '<path d="' + d + '" fill="' + neutro + '" stroke="' + linea + '" stroke-width=".7"/>';
@@ -1083,8 +1598,8 @@ function elencoMuscoli(exId){
   const pill = (t, col, bg) => '<span style="display:inline-block;font-size:12px;padding:3px 9px;margin:3px 4px 0 0;' +
     "background:" + bg + ";color:" + col + ';border-radius:11px">' + t + "</span>";
   return '<div style="margin-top:8px;text-align:center">' +
-    m.p.map(x => pill(NOMI_MUSC[x], "#fff", "#C0392B")).join("") +
-    m.s.map(x => pill(NOMI_MUSC[x], "#7C2018", "#F6E3E0")).join("") + "</div>" +
+    m.p.map(x => pill(NOMI_MUSC[x], "#fff", "#E8502A")).join("") +
+    m.s.map(x => pill(NOMI_MUSC[x], "#8A3A12", "#FBE6D2")).join("") + "</div>" +
     '<div class="tiny" style="text-align:center;margin-top:4px;color:#5A6068">Guarda la figura: i muscoli si accendono nel momento dello sforzo</div>';
 }
 
@@ -1095,8 +1610,13 @@ function pannelloVideo(exId){
   const an = anima(exId), sg = sagoma(exId);
   if(an || sg){
     h += '<div style="background:#F2F0E9;border:1px solid var(--linea);border-radius:3px;padding:12px 10px 6px">';
+    // se esiste un'illustrazione per questo esercizio la usa, altrimenti resta il disegno
+    h += '<img class="tavola-img" data-ex="' + exId + '" src="img/' + exId + '.png" alt="Esecuzione di ' +
+      esc(EX[exId].n) + '" style="display:none;width:100%;max-width:340px;margin:0 auto;border-radius:3px">';
+    h += '<div class="tavola-dis" style="display:none">';
     if(an) h += an + '<div class="tiny" style="text-align:center;margin-top:2px;color:#5A6068">La linea tratteggiata è la posizione di arrivo, la freccia la direzione del movimento</div>';
     if(sg) h += '<details style="margin-top:10px"><summary class="tiny" style="cursor:pointer;text-align:center;color:#5A6068">Vedi la mappa su tutto il corpo</summary>' + sg + "</details>";
+    h += "</div>";
     h += elencoMuscoli(exId) + "</div>";
   } else {
     h += '<p class="tiny">Questo esercizio l\'hai aggiunto tu, quindi non so quali muscoli coinvolge. Puoi aggiungere un video qui sotto.</p>';
@@ -1992,10 +2512,20 @@ function render(){
   $("#app").innerHTML = h;
   const tt = $("#toast");
   if(tt) setTimeout(() => { try{ tt.remove(); }catch(e){} }, 4500);
+  tavoleEsercizi();
   caricaFoto();
   window.scrollTo(0, S.scroll || 0); S.scroll = 0;
 }
 const mmss = s => Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+
+function tavoleEsercizi(){
+  document.querySelectorAll("img.tavola-img").forEach(im => {
+    const dis = im.parentNode.querySelector(".tavola-dis");
+    im.onload = () => { im.style.display = "block"; };
+    im.onerror = () => { im.style.display = "none"; if(dis) dis.style.display = ""; };
+    if(im.complete){ if(im.naturalWidth > 0) im.style.display = "block"; else { if(dis) dis.style.display = ""; } }
+  });
+}
 
 async function caricaFoto(){
   for(const im of document.querySelectorAll("img[data-src]")){
