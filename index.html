@@ -9,6 +9,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="OLYMPVS">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <title>OLYMPVS</title>
 <style>html,body{margin:0;padding:0;background:#10151A;-webkit-text-size-adjust:100%}</style>
 </head>
@@ -2428,14 +2431,8 @@ document.addEventListener("visibilitychange", () => { if(!document.hidden && S.g
 
 (function(){
   try{
-    const ico = document.createElement("link"); ico.rel = "apple-touch-icon"; ico.href = LOGO_PNG; document.head.appendChild(ico);
-    const fav = document.createElement("link"); fav.rel = "icon"; fav.href = LOGO_PNG; document.head.appendChild(fav);
-    const man = {name:"OLYMPVS", short_name:"OLYMPVS", start_url:".", scope:".", display:"standalone",
-      orientation:"portrait", background_color:"#0A0E12", theme_color:"#0A0E12", lang:"it",
-      icons:[{src:LOGO_PNG, sizes:"512x512", type:"image/png", purpose:"any"},
-             {src:LOGO_PNG, sizes:"512x512", type:"image/png", purpose:"maskable"}]};
-    const url = URL.createObjectURL(new Blob([JSON.stringify(man)], {type:"application/manifest+json"}));
-    const lm = document.createElement("link"); lm.rel = "manifest"; lm.href = url; document.head.appendChild(lm);
+    if("serviceWorker" in navigator)
+      window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
   }catch(e){}
 })();
 
