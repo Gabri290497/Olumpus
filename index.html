@@ -80,6 +80,8 @@
   .exBtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .exBtns .btn{width:100%;justify-content:center}
   .spunta{color:#79A87F;font-size:17px;line-height:1;margin-right:5px}
+  .stelle{font-size:12.5px;letter-spacing:1.5px;color:var(--oro);white-space:nowrap}
+  .stelle i{color:#3D4654;font-style:normal}
   .exOpen{margin:0 0 13px;padding:12px 13px;border:1px solid var(--linea);border-radius:16px;
     background:linear-gradient(135deg,#142640,#0C1727)}
   #app{font-family:var(--body);color:var(--notte);background:var(--marmo);max-width:540px;margin:0 auto;
@@ -411,6 +413,52 @@ const SPLIT = {
 function adatto(id, p){
   return (p.attrezzatura !== "casa" || EX[id].casa);
 }
+/* Quanto un esercizio puo' rimpiazzarne un altro, da una a cinque stelle.
+   Pesa i muscoli in comune, poi lo schema di movimento, l'attrezzo e il fatto
+   che siano entrambi fondamentali o entrambi di isolamento. */
+function compatibilita(a, b){
+  const A = EX[a] || {}, B = EX[b] || {};
+  const ma = muscoli(a) || {p:[], s:[]}, mb = muscoli(b) || {p:[], s:[]};
+  const tutti = m => (m.p || []).concat(m.s || []);
+  const la = tutti(ma), lb = tutti(mb);
+  const comuni = la.filter(x => lb.indexOf(x) >= 0).length;
+  const unione = new Set(la.concat(lb)).size || 1;
+  let q = 2.5 * (comuni / unione);
+  const pa = ma.p || [], pb = mb.p || [];
+  const princ = pa.filter(x => pb.indexOf(x) >= 0).length;
+  if(pa.length && princ === pa.length) q += 1.1;
+  else if(princ) q += 0.55;
+  if(PATTERN[a] && PATTERN[a] === PATTERN[b]) q += 0.8;
+  if(!!A.comp === !!B.comp) q += 0.4;
+  if(A.att && A.att === B.att) q += 0.35;
+  return Math.max(1, Math.min(5, Math.round(q)));
+}
+const stelle = n => '<span class="stelle" aria-label="Compatibilita\u0300 ' + n + ' su 5">' +
+  "\u2605\u2605\u2605\u2605\u2605".slice(0, n) + "<i>" + "\u2605\u2605\u2605\u2605\u2605".slice(0, 5 - n) + "</i></span>";
+
+/* nome scritto a mano: se lo riconosco aggancio quello che ho gia',
+   altrimenti lo aggiungo agli esercizi tuoi tenendo gruppo e attrezzo dell'originale */
+function idDaNome(nome, orig){
+  const noto = riconosci(nome);
+  if(noto && EX[noto]){
+    /* aggancio solo se quello che hai scritto sta tutto dentro il nome che conosco:
+       "panca piana" si', "affondi camminati" no, perche' camminati e' un altro esercizio */
+    const tuoi = norm(nome).split(" ").filter(x => x.length > 3), suo = norm(EX[noto].n);
+    if(tuoi.length && tuoi.every(x => suo.indexOf(x) >= 0)) return noto;
+  }
+  const base = "c-" + (norm(nome).replace(/ /g, "-").slice(0, 26) || "esercizio");
+  if(!EX[base]){
+    S.exCustom = S.exCustom || {};
+    S.exCustom[base] = {n:nome.slice(0, 52), g:orig.g, att:orig.att || "da definire",
+      comp:orig.comp, inc:orig.inc, casa:orig.casa, cardio:orig.cardio, secondi:orig.secondi, custom:1,
+      cue:["Esercizio aggiunto da te al posto di " + orig.n + ".",
+           "Controlla la tecnica con un video o con un istruttore.",
+           "Se senti dolore articolare fermati e riduci il carico."]};
+    EX[base] = S.exCustom[base];
+  }
+  return base;
+}
+
 function sostituisci(id0, p, usati){
   const okEsp = id => !(p.esperienza === "principiante" && RISCHIOSI[id]);
   const cand = [id0].concat(ALT[id0] || []);
@@ -464,16 +512,20 @@ function generaScheda(p){
    ============================================================ */
 const K = "olympvs:dati:v1";
 const VUOTO = () => ({profilo:null, scheda:null, carichi:{}, log:[], pesi:[], misure:[], foto:[], video:{}, videoTolti:{}, ytKey:"", ytDiretto:true, ultimoCheck:0, ultimaRevisione:0, exCustom:{},
-  promemoria:{attivo:false, giorni:[2,4,6], ora:"18:30"}, scaricoRimandato:0, scaricoFatto:[]});
+  promemoria:{attivo:false, giorni:[2,4,6], ora:"18:30"}, scaricoRimandato:0, scaricoFatto:[],
+  /* l'allenamento di oggi: serie scritte a meta', spunte e ricambi solo-oggi.
+     Se lo schermo si blocca a meta' seduta li ritrovi al riavvio. */
+  bozza:{}, sostituz:{}, fatti:{}, fattiData:null, fattiGiorno:null});
 let S = Object.assign(VUOTO(), {tab:"oggi", giornoAperto:null, exAperto:null, bozza:{}, sostituz:{},
   timer:null, msg:null, subProgressi:"peso", scambiaPer:null, videoAperto:null, bozzaScheda:null, importInfo:null, modale:null, revisione:null,
-  fatti:{}});
+  fatti:{}, fattiData:null});
 let koSalvataggio = false;
 
 async function carica(){
   try{ const r = await store.get(K); if(r && r.value) Object.assign(S, JSON.parse(r.value)); }
   catch(e){}
   if(S.exCustom) Object.assign(EX, S.exCustom);
+  if(S.fattiData && S.fattiData !== oggiISO()){ S.bozza = {}; S.sostituz = {}; S.fatti = {}; S.fattiData = null; S.fattiGiorno = null; }
   S.video = S.video || {};
   for(const k in VIDEO_DEF) if(!S.video[k] && !(S.videoTolti || {})[k]) S.video[k] = {tipo:"yt", id:VIDEO_DEF[k], def:1};
 }
@@ -500,11 +552,14 @@ function consiglio(e){
   if(!serie.length) return null;
   const inc = EX[e.id].inc;
   if(serie.length >= e.sets && serie.every(s => s.r >= e.rmax)){
-    if(!inc) return {tipo:"su", inc:0, txt:"Tutte le serie chiuse a " + e.rmax + unita +
+    /* si cita il numero davvero registrato, non il massimo previsto:
+       chi ha chiuso a venti non deve leggere diciotto */
+    const fatte = Math.min.apply(null, serie.map(s => s.r));
+    if(!inc) return {tipo:"su", inc:0, txt:"Tutte le serie chiuse a " + fatte + unita +
       ". Rendilo più difficile: discesa in quattro secondi, piedi su un rialzo o un peso addosso."};
-    if(car) return {tipo:"su", inc:inc, txt:"Hai retto " + e.rmax + " minuti. Alza il livello a " +
+    if(car) return {tipo:"su", inc:inc, txt:"Hai retto " + fatte + " minuti. Alza il livello a " +
       fmt(peso + inc) + " e riparti da " + e.rmin + " minuti."};
-    return {tipo:"su", inc:inc, txt:"Tutte le serie chiuse a " + e.rmax + unita + ". Sali a " +
+    return {tipo:"su", inc:inc, txt:"Tutte le serie chiuse a " + fatte + unita + ". Sali a " +
       fmt(peso + inc) + " kg e riparti da " + e.rmin + "."};
   }
   const scarsa = l => l.sets.filter(s => s.r > 0).every(s => s.r < e.rmin);
@@ -2383,6 +2438,8 @@ function vistaOggi(){
 
 function vistaGiorno(gi){
   const g = S.scheda.giorni[gi], dio = DEI[g.dio], scarico = inScarico();
+  /* vale per l'allenamento di oggi: a giorno nuovo si riparte puliti */
+  if(S.fattiData && S.fattiData !== oggiISO()){ S.bozza = {}; S.sostituz = {}; S.fatti = {}; S.fattiData = null; S.fattiGiorno = null; }
   /* se un esercizio e' aperto in registrazione si mostra solo quello:
      durante le serie non deve esserci altro sotto gli occhi */
   const soloK = S.exAperto && S.exAperto.split(":")[0] === String(gi) ? S.exAperto : null;
@@ -2410,13 +2467,13 @@ function vistaGiorno(gi){
       '<div class="tiny">' + ex.g + " · " + ex.att + (S.sostituz[k] ? " · sostituito oggi" : "") + "</div>";
     /* le serie della volta scorsa vanno mostrate sempre, anche quando il carico
        e' zero: a corpo libero contano solo le ripetizioni */
-    const conPeso = u && u.sets.some(x => x.w > 0);
-    const parti = u ? u.sets.filter(x => x.r > 0).map(x => (x.w > 0 ? fmt(x.w) + (ex.cardio ? "·" : "×") : "") + x.r) : [];
+    const conPeso = u && !ex.cardio && u.sets.some(x => x.w > 0);
+    const parti = u ? u.sets.filter(x => x.r > 0).map(x => (x.w > 0 && !ex.cardio ? fmt(x.w) + "×" : "") + x.r) : [];
     const scorsa = parti.join(conPeso ? "  " : " · ");
     if(peso > 0){
       const mostra = scarico ? Math.round(peso * 0.6 / 2.5) * 2.5 : peso;
       h += '<div class="tiny" style="margin-top:6px">' + (ex.cardio ? "Livello: " : "Carico: ") + '<strong style="color:var(--notte);font-size:14px">' + fmt(mostra) + (ex.cardio ? "" : " kg") + "</strong>" +
-        (scarico ? " (scarico)" : "") + (scorsa ? " · ultima volta " + scorsa : "") + "</div>";
+        (scarico ? " (scarico)" : "") + (scorsa ? " · ultima volta " + scorsa + (ex.cardio ? " min" : "") : "") + "</div>";
       if(ex.att === "bilanciere" && mostra >= 20) h += htmlDischi(mostra);
     } else if(scorsa){
       h += '<div class="tiny" style="margin-top:6px">Ultima volta <strong style="color:var(--notte);font-size:14px">' +
@@ -2442,14 +2499,25 @@ function vistaGiorno(gi){
     if(S.videoAperto === k) h += pannelloVideo(e.id);
     if(S.scambiaPer === k){
       const usati = {}; g.ex.forEach((x, j) => usati[exCorrente(gi, j).id] = j !== ei);
-      const opzioni = Object.keys(EX).filter(id => EX[id].g === ex.g && id !== e.id && adatto(id, S.profilo) && !usati[id]).slice(0, 4);
+      /* le piu' simili per prime, cosi' le stelline hanno un senso di lettura */
+      const opzioni = Object.keys(EX).filter(id => EX[id].g === ex.g && id !== e.id && adatto(id, S.profilo) && !usati[id])
+        .map(id => ({id:id, q:compatibilita(e.id, id)}))
+        .sort((a, b) => b.q - a.q).slice(0, 4);
       h += '<div class="flag info"><div class="dot" style="background:var(--egeo)"></div><div>Stesso gruppo muscolare, scegli il ricambio:' +
-        opzioni.map(id => '<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">' +
-          '<strong style="flex:1 1 100%;font-size:14px">' + esc(EX[id].n) + "</strong>" +
-          '<button class="btn small" data-usa="' + k + "|" + id + '">Solo oggi</button>' +
-          '<button class="btn ghost small" data-usasempre="' + k + "|" + id + '">Sempre</button></div>').join("") +
+        '<div class="tiny" style="margin-top:3px">Le stelline dicono quanto somiglia a ' + esc(ex.n) + ".</div>" +
+        opzioni.map(o => '<div style="margin-top:9px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">' +
+          '<strong style="flex:1 1 100%;font-size:14px">' + esc(EX[o.id].n) + " " + stelle(o.q) + "</strong>" +
+          '<button class="btn small" data-usa="' + k + "|" + o.id + '">Solo oggi</button>' +
+          '<button class="btn ghost small" data-usasempre="' + k + "|" + o.id + '">Sempre</button></div>').join("") +
         (opzioni.length ? "" : "<div class=\"tiny\" style=\"margin-top:6px\">Nessuna alternativa libera per questo gruppo.</div>") +
-        '<div style="margin-top:10px"><button class="btn link" data-scambia="' + k + '">Annulla</button></div></div></div>';
+        '<div style="margin-top:13px;padding-top:11px;border-top:1px dotted rgba(255,255,255,.18)">' +
+        '<strong style="font-size:14px">Altro</strong>' +
+        '<div class="tiny" style="margin:2px 0 7px">Scrivilo tu: se lo conosco lo aggancio, altrimenti lo aggiungo ai tuoi esercizi.</div>' +
+        '<input id="alt-nome" type="text" autocomplete="off" placeholder="Per esempio: affondi camminati">' +
+        '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">' +
+        '<button class="btn small" data-altro="' + k + '|oggi">Solo oggi</button>' +
+        '<button class="btn ghost small" data-altro="' + k + '|sempre">Sempre</button></div></div>' +
+        '<div style="margin-top:12px"><button class="btn link" data-scambia="' + k + '">Annulla</button></div></div></div>';
     }
     if(aperto){
       h += '<div style="margin-top:12px;border-top:1px dotted var(--linea);padding-top:11px">';
@@ -2620,6 +2688,7 @@ function render(){
   caricaFoto();
   window.scrollTo(0, S.scroll || 0); S.scroll = 0;
 }
+const oggiISO = () => new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
 const mmss = s => Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
 /* durata a parole: sotto il minuto si dicono i secondi */
 function durata(s){
@@ -2710,9 +2779,18 @@ document.addEventListener("click", async function(ev){
 
   if(d.sub){ S.subProgressi = d.sub; render(); return; }
   if(d.tab){ S.tab = d.tab; S.avvio = null; S.giornoAperto = null; S.msg = null; tieniAcceso(false); render(); return; }
-  if(d.giorno !== undefined){ S.giornoAperto = Number(d.giorno); S.exAperto = null; S.bozza = {}; S.sostituz = {}; S.msg = null; tieniAcceso(true); render(); return; }
+  if(d.giorno !== undefined){
+    const nuovo = Number(d.giorno);
+    /* rientrare nello stesso allenamento di oggi conserva quello che hai gia' scritto;
+       passare a un altro, o tornarci domani, riparte pulito */
+    if(!(S.fattiData === oggiISO() && S.fattiGiorno === nuovo)){
+      S.bozza = {}; S.sostituz = {}; S.fatti = {}; S.fattiData = null; S.fattiGiorno = null; copiaSerie = {};
+    }
+    S.giornoAperto = nuovo; S.exAperto = null; S.msg = null; tieniAcceso(true); render(); return;
+  }
   if(t.id === "indietro"){ S.giornoAperto = null; tieniAcceso(false); render(); return; }
-  if(d.apri){ S.exAperto = S.exAperto === d.apri ? null : d.apri; S.scambiaPer = null; S.scroll = 0; render(); return; }
+  /* un pannello alla volta: aprirne uno chiude gli altri due */
+  if(d.apri){ S.exAperto = S.exAperto === d.apri ? null : d.apri; S.scambiaPer = null; S.videoAperto = null; S.scroll = 0; render(); return; }
   if(d.ytdir !== undefined){
     S.ytDiretto = d.ytdir === "1";
     S.ytKey = (($("#f-ytkey") || {}).value || S.ytKey || "").trim();
@@ -2852,8 +2930,10 @@ document.addEventListener("click", async function(ev){
     S.msg = "Scheda tua caricata: " + S.scheda.giorni.length + " allenamenti.";
     await salva(); render(); return;
   }
-  if(d.scambia){ S.scroll = window.scrollY; S.scambiaPer = S.scambiaPer === d.scambia ? null : d.scambia; render(); return; }
-  if(d.video){ S.scroll = window.scrollY; S.videoAperto = S.videoAperto === d.video ? null : d.video; render(); return; }
+  if(d.scambia){ S.scroll = window.scrollY; S.scambiaPer = S.scambiaPer === d.scambia ? null : d.scambia;
+    S.exAperto = null; S.videoAperto = null; render(); return; }
+  if(d.video){ S.scroll = window.scrollY; S.videoAperto = S.videoAperto === d.video ? null : d.video;
+    S.exAperto = null; S.scambiaPer = null; render(); return; }
   if(d.setyt){
     const campo = document.getElementById("vid-" + d.setyt), id = ytId(campo ? campo.value : "");
     if(!id){ avvisa("Non riconosco il link. Copialo dal pulsante Condividi di YouTube, tipo https://youtu.be/xxxxxxxxxxx"); return; }
@@ -2870,7 +2950,22 @@ document.addEventListener("click", async function(ev){
     S.videoTolti = S.videoTolti || {}; S.videoTolti[d.delvideo] = 1;
     S.scroll = window.scrollY; await salva(); render(); return;
   }
-  if(d.usa){ const [k, id] = d.usa.split("|"); S.sostituz[k] = id; S.scambiaPer = null; S.scroll = window.scrollY; render(); return; }
+  if(d.usa){ const [k, id] = d.usa.split("|"); S.sostituz[k] = id; S.scambiaPer = null; S.scroll = window.scrollY;
+    segnaGiornata(); await salva(); render(); return; }
+  if(d.altro){
+    const [k, modo] = d.altro.split("|"), [gi, ei] = k.split(":").map(Number);
+    const campo = $("#alt-nome"), nome = ((campo && campo.value) || "").trim();
+    if(nome.length < 3){ avvisa("Scrivi il nome dell'esercizio."); return; }
+    const v = S.scheda.giorni[gi].ex[ei], orig = EX[v.id] || {g:"Gambe"};
+    const id = idDaNome(nome, orig), ex2 = EX[id];
+    if(modo === "sempre"){
+      v.id = id; v.rmin = ex2.secondi ? 20 : v.rmin; v.rmax = ex2.secondi ? 60 : v.rmax;
+      delete S.sostituz[k];
+      S.msg = "Scheda aggiornata con " + ex2.n + ".";
+    } else S.sostituz[k] = id;
+    S.scambiaPer = null; S.scroll = window.scrollY;
+    segnaGiornata(); await salva(); render(); return;
+  }
   if(d.usasempre){
     const [k, id] = d.usasempre.split("|"), [gi, ei] = k.split(":").map(Number);
     const v = S.scheda.giorni[gi].ex[ei], ex = EX[id], iso = !ex.comp;
@@ -2890,13 +2985,13 @@ document.addEventListener("click", async function(ev){
       const medio = bz.reduce((a, x) => a + (Number(x.w) || 0), 0) / bz.length;
       if(medio > 0) S.carichi[e.id] = Math.round(medio * 2) / 2;
     }
-    S.fatti = S.fatti || {}; S.fatti[d.salvaex] = 1;
+    S.fatti = S.fatti || {}; S.fatti[d.salvaex] = 1; segnaGiornata();
     delete copiaSerie[d.salvaex];
     delete S.bozza[d.salvaex]; S.exAperto = null; S.scroll = window.scrollY;
     await salva(); render(); return;
   }
   if(t.id === "chiudi-sessione"){
-    S.giornoAperto = null; S.exAperto = null; S.bozza = {}; S.sostituz = {}; S.fatti = {}; copiaSerie = {};
+    S.giornoAperto = null; S.exAperto = null; S.bozza = {}; S.sostituz = {}; S.fatti = {}; S.fattiData = null; S.fattiGiorno = null; copiaSerie = {};
     S.msg = "Allenamento registrato. I consigli sui carichi sono già aggiornati.";
     tieniAcceso(false); render(); return;
   }
@@ -2934,7 +3029,9 @@ document.addEventListener("click", async function(ev){
 
 /* cosa ha copiato la prima riga sulle altre: serve a capire quali righe
    sono ancora copie e quali l'utente ha corretto a mano */
-let copiaSerie = {};
+let copiaSerie = {}, attesaSalva = null;
+function segnaGiornata(){ S.fattiData = oggiISO(); S.fattiGiorno = S.giornoAperto; }
+function salvaFraPoco(){ clearTimeout(attesaSalva); attesaSalva = setTimeout(() => { salva(); }, 1200); }
 function segnaRiga(inp, k, idx){
   const riga = inp.closest(".setline");
   if(!riga) return;
@@ -2969,6 +3066,7 @@ document.addEventListener("input", async function(ev){
       copiaSerie[k][campo] = val;
     }
     segnaRiga(el, k, idx);
+    segnaGiornata(); salvaFraPoco();
     return;
   }
   if(el.id === "scatta" && el.files && el.files[0]){
