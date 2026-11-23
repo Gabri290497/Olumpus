@@ -78,6 +78,7 @@
   .exCard .serie{font-family:var(--disp);font-weight:700;font-size:18px;color:var(--oro-c);white-space:nowrap}
   .exCard .piede{padding:0 13px 13px}
   .exBtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .exBtns .largo{grid-column:1/-1}
   .exBtns .btn{width:100%;justify-content:center}
   .spunta{color:#79A87F;font-size:17px;line-height:1;margin-right:5px}
   .stelle{font-size:12.5px;letter-spacing:1.5px;color:var(--oro);white-space:nowrap}
@@ -166,7 +167,11 @@
   .timer .num{font-size:23px;color:var(--oro-c)}
   .timer button{background:none;border:1px solid #66727C;color:#fff;padding:7px 11px;font:inherit;font-size:14px;cursor:pointer;border-radius:2px}
 
-  .player{width:100%;aspect-ratio:16/9;background:#000;margin-top:10px}
+  .player{width:100%;aspect-ratio:16/9;background:#000;margin-top:10px;border-radius:10px;overflow:hidden}
+  .player.vuoto{display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;
+    background:linear-gradient(135deg,#142640,#0C1727);border:1px solid var(--linea)}
+  .player.vuoto p{margin:7px 0 11px;font-size:14px;color:#BCC7D2;line-height:1.35}
+  .player .vplay{font-size:25px;color:var(--oro);line-height:1}
   .player iframe,.player video{width:100%;height:100%;border:0;display:block}
   input[type=file]{width:100%;font:inherit;font-size:13.5px;padding:10px;border:1px dashed var(--linea);background:#131C24;color:var(--notte);border-radius:2px}
   .velo{position:fixed;inset:0;background:rgba(0,0,0,.74);z-index:70;display:flex;align-items:flex-end;
@@ -768,10 +773,39 @@ function htmlDischi(peso){
 }
 /* video tutorial italiani già impostati per gli esercizi principali */
 const VIDEO_DEF = {
-  squat:"ZyqXdLQ3arY", panca:"X20sHGRa56Y", stacco:"xPs2VFWDWTI", rumeno:"_P3WyVBuSwA",
-  rumenoman:"6LnuzmUxANI", rematore:"k6oA18pYHBU", remmanubrio:"wTeZWsf2i8o", lat:"P8QKoy5sjv8",
-  trazioni:"oN7zZJd4KnI", military:"yalBWM_YjSQ", alzate:"6sT8LVeGVoc", curlbil:"mhrv92jvtc4",
-  pushdown:"uJAuEE_RCL0", french:"uJAuEE_RCL0"
+  /* petto */
+  panca:"X20sHGRa56Y", pancaincl:"IPQvAFmgTAc", pancadecl:"6j3nZEIAV9Y", spintepiane:"g6Z73nupxQY",
+  chestpress:"6mWAqa41eKI", croci:"J02PvLa_9Ks", crocipanca:"pVbCi77uzXI", pecdeck:"hZ0CGRaKwbQ",
+  piegamenti:"LvQwAFb_jOs", piegdiamante:"56C3stBdkH0", dip:"vHuRgKitNRs",
+  /* schiena */
+  stacco:"xPs2VFWDWTI", rumeno:"_P3WyVBuSwA", rumenoman:"6LnuzmUxANI", goodmorning:"yS6OOILXZsE",
+  rematore:"k6oA18pYHBU", remmanubrio:"wTeZWsf2i8o", tbar:"AdwZHQ1mXYI", remmacchina:"79uXUMgmZmk",
+  remorizz:"4mgx5wCw49M", lat:"P8QKoy5sjv8", lativersa:"fAgwBcD5U44", trazioni:"oN7zZJd4KnI",
+  pulley:"9ibSoJ9q0Y8", pullover:"7s8Cy8VSZXA", pulldowncorda:"2AhFDt4AU64", facepull:"5GKhYz6Tubc",
+  iperest:"XjG0QCSHxbU", shrug:"5oKO5tpOZaw",
+  /* gambe */
+  squat:"ZyqXdLQ3arY", squatfrontale:"OiQCRHKpL2A", squatgoblet:"zNfAW0V2kqc", hacksquat:"PH9uLhNr-s4",
+  pressa:"wDVleuqvQKo", affondi:"nrgJBa3Gq3s", affondicamm:"5IzLQWqiggg", bulgaro:"QfUOjm2LmJk",
+  stepup:"AsppUFDOQbI", legext:"gfrotHBLZjQ", legcurl:"4CmkEjF9aAk", nordic:"dlCTeWHu9EM",
+  sissy:"wNZhWUpKDLc", hipthrust:"K2Q6hRKYpMI", ponteglutei:"EJBpPCQQPhs", kickback:"A0ASB18doO0",
+  abduttori:"26vqp_WjG54", adduttori:"bzMYlffkkiE", polpacci:"zfDcdL06LxI", polpaccised:"X89GTTY84tY",
+  /* spalle */
+  military:"yalBWM_YjSQ", spallemanubri:"KRq3lo5DtUc", spallemacchina:"wZRrHqiC2LM", arnold:"fYjKJ0sxiQ0",
+  alzate:"6sT8LVeGVoc", alzatefront:"dP193xphbkE", alzateposteriori:"oIdOSCJa6ek", pecdeckinv:"e4dJ1QoxUtI",
+  tirmento:"3N5OlM6JvOA",
+  /* braccia */
+  curlbil:"mhrv92jvtc4", curlman:"QMMsalrCHv0", hammer:"4dIvPmsqNvI", scott:"_DDyGliSCQo",
+  curlcavo:"5YacnM2yMEI", concentrato:"Lp5mDsTl7hc", curlpolsi:"QWj4R5Tf5RE",
+  pushdown:"uJAuEE_RCL0", french:"o5aw4AGO4Jk", kickbacktri:"WQgiQBau5_A", pancastretta:"xrA8hH5y6No",
+  dippanca:"w0IGXuYFbZo",
+  /* core */
+  plank:"Is-7PPaBcsM", planklat:"9U5Ce6ivAIo", hollow:"TJ_1SMaLaCs", crunch:"Iep9ffXKQHw",
+  crunchinv:"NcjNbLiTUlE", situp:"zbXlkaojcJw", legraise:"XHnfSXL6adg", russian:"WuAGhVJpI8c",
+  mountain:"B8luLadmxtY", abwheel:"TlUAmG1sdFs", birddog:"kc_8xRAQAU8",
+  /* cardio */
+  tapis:"oaQidS9Zf4U", camminata:"0KOGNWc4_aQ", corsa:"FytJTyw8hN0", interval:"gSEf7_x00g0",
+  cyclette:"X-PQODWkI8E", ellittica:"pbKkfcAANFs", vogatore:"cbHHV_wYHJU", scalatore:"yThQvTI_J0s",
+  corda:"cdNDboiq61U", burpee:"wB2YtIuaLi4"
 };
 
 const cercaVideo = id => "https://www.youtube.com/results?search_query=" + encodeURIComponent(EX[id].n + " tecnica corretta");
@@ -1709,59 +1743,64 @@ function elencoMuscoli(exId){
   return '<div style="margin-top:8px;text-align:center">' +
     m.p.map(x => pill(NOMI_MUSC[x], "#fff", "#E8502A")).join("") +
     m.s.map(x => pill(NOMI_MUSC[x], "#8A3A12", "#FBE6D2")).join("") + "</div>" +
-    '<div class="tiny" style="text-align:center;margin-top:4px;color:#5A6068">Guarda la figura: i muscoli si accendono nel momento dello sforzo</div>';
+    '<div class="tiny" style="text-align:center;margin-top:4px;color:#5A6068">In pieno i muscoli principali, in chiaro quelli che danno una mano</div>';
 }
 
 
 function pannelloVideo(exId){
-  const v = S.video[exId];
+  const v = S.video[exId], ex = EX[exId] || {};
+  const link = v && v.tipo === "yt" ? "https://www.youtube.com/watch?v=" + v.id : cercaVideo(exId);
   let h = '<div style="margin-top:12px;border-top:1px dotted var(--linea);padding-top:11px">';
-  const an = anima(exId), sg = sagoma(exId);
-  if(an || sg){
-    h += '<div style="background:#F2F0E9;border:1px solid var(--linea);border-radius:3px;padding:12px 10px 6px">';
-    // se esiste un'illustrazione per questo esercizio la usa, altrimenti resta il disegno
-    h += '<img class="tavola-img" data-ex="' + exId + '" src="img/' + exId + '.png" alt="Esecuzione di ' +
-      esc(EX[exId].n) + '" style="display:none;width:100%;max-width:340px;margin:0 auto;border-radius:3px">';
-    h += '<div class="tavola-dis" style="display:none">';
-    if(an) h += an + '<div class="tiny" style="text-align:center;margin-top:2px;color:#5A6068">La linea tratteggiata è la posizione di arrivo, la freccia la direzione del movimento</div>';
-    if(sg) h += '<details style="margin-top:10px"><summary class="tiny" style="cursor:pointer;text-align:center;color:#5A6068">Vedi la mappa su tutto il corpo</summary>' + sg + "</details>";
-    h += "</div>";
-    h += elencoMuscoli(exId) + "</div>";
-  } else {
-    h += '<p class="tiny">Questo esercizio l\'hai aggiunto tu, quindi non so quali muscoli coinvolge. Puoi aggiungere un video qui sotto.</p>';
-  }
-  h += '<h3 style="margin-top:12px">Tecnica</h3><ul style="margin:6px 0 10px;padding-left:18px;font-size:14px">' +
-    EX[exId].cue.map(x => "<li>" + esc(x) + "</li>").join("") + "</ul>";
-  if(v && v.tipo === "yt" && S.ytDiretto !== false){
-    h += '<a class="btn oro" style="display:block;text-align:center;text-decoration:none;margin-top:12px" ' +
-      'href="https://www.youtube.com/watch?v=' + v.id + '" target="_blank" rel="noopener">Guarda il tutorial su YouTube</a>' +
-      '<div class="tiny" style="margin-top:6px">Si apre l\'app di YouTube direttamente su questo video.</div>';
+  /* YouTube rifiuta di aprirsi dentro un file aperto a mano dal telefono:
+     serve l'indirizzo del sito. In quel caso spiego invece di mostrare l'errore bianco. */
+  const sito = location.protocol === "http:" || location.protocol === "https:";
+  const rete = navigator.onLine !== false;
+  if(v && v.tipo === "yt" && (!sito || !rete)){
+    h += '<div class="player vuoto"><div><div class="vplay">&#9654;</div><p>' +
+      (sito ? "Il video parte quando sei connesso a internet."
+            : "Questo file \u00e8 aperto dal telefono, non dal sito: YouTube non si apre qui dentro.<br>Apri l\u2019app dal suo indirizzo e il video parte da solo.") +
+      '</p><a class="btn oro small" style="text-decoration:none;display:inline-block" href="' + link +
+      '" target="_blank" rel="noopener">Guardalo su YouTube</a></div></div>';
   } else if(v && v.tipo === "yt"){
+    /* il video si guarda qui dentro, senza uscire dall'app */
     h += '<div class="player"><iframe src="https://www.youtube-nocookie.com/embed/' + v.id +
-      '?rel=0&modestbranding=1" title="Tutorial ' + esc(EX[exId].n) +
-      '" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe></div>' +
-      '<div class="tiny" style="margin-top:6px">Se non parte qui, <a href="https://www.youtube.com/watch?v=' + v.id +
+      '?rel=0&modestbranding=1&playsinline=1" title="Tutorial ' + esc(ex.n || "") +
+      '" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"' +
+      ' allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>' +
+      '<div class="tiny" style="margin-top:6px">Se qui non parte, <a href="' + link +
       '" target="_blank" rel="noopener">aprilo su YouTube</a>.</div>';
   } else if(v && v.tipo === "locale"){
     h += '<div class="player"><video data-vsrc="' + v.key + '" controls playsinline preload="metadata"></video></div>' +
-      '<div class="tiny" style="margin-top:6px">Video tuo, salvato sul dispositivo.</div>';
+      '<div class="tiny" style="margin-top:6px">Video tuo, salvato sul telefono.</div>';
+  } else {
+    /* stesso riquadro, ma ancora da riempire: un link incollato una volta
+       e da li' in poi il video resta dentro l'app */
+    h += '<div class="player vuoto"><div><div class="vplay">&#9654;</div>' +
+      "<p>Per questo esercizio non ho ancora un video.</p>" +
+      '<a class="btn oro small" style="text-decoration:none;display:inline-block" href="' + link +
+      '" target="_blank" rel="noopener">Cercalo su YouTube</a></div></div>' +
+      '<label for="vid-' + exId + '" style="margin-top:10px">Incolla qui il link: da allora lo vedi qui dentro</label>' +
+      '<div style="display:flex;gap:8px"><input id="vid-' + exId + '" type="text" inputmode="url" placeholder="https://youtu.be/\u2026">' +
+      '<button class="btn small" data-setyt="' + exId + '">Salva</button></div>';
+    if(S.ytKey) h += '<div style="margin-top:10px"><button class="btn ghost small" data-cercavid="' + exId +
+      '">Trovalo tu</button></div>';
+    h += '<details style="margin-top:10px"><summary class="tiny" style="cursor:pointer">Oppure usa un video tuo</summary>' +
+      '<input id="vf-' + exId + '" class="vfile" data-ex="' + exId + '" type="file" accept="video/*" capture style="max-width:220px;margin-top:8px">' +
+      "</details>";
   }
-  if(!v && S.ytKey) h += '<div style="margin-top:10px"><button class="btn ghost small" data-cercavid="' + exId +
-    '">Trova il video di questo esercizio</button></div>';
-  h += '<details style="margin-top:12px"><summary class="tiny" style="cursor:pointer">' +
-    (v ? "Cambia o togli il video" : "Aggiungi tu il video") + "</summary>" +
+  h += elencoMuscoli(exId);
+  if(ex.cue && ex.cue.length) h += '<h3 style="margin-top:14px">Tecnica</h3><ul style="margin:6px 0 10px;padding-left:18px;font-size:14px">' +
+    ex.cue.map(x => "<li>" + esc(x) + "</li>").join("") + "</ul>";
+  if(v) h += '<details style="margin-top:10px"><summary class="tiny" style="cursor:pointer">Cambia o togli il video</summary>' +
     '<label for="vid-' + exId + '">Link YouTube</label>' +
-    '<div style="display:flex;gap:8px"><input id="vid-' + exId + '" type="text" inputmode="url" placeholder="https://youtu.be/…">' +
+    '<div style="display:flex;gap:8px"><input id="vid-' + exId + '" type="text" inputmode="url" placeholder="https://youtu.be/\u2026">' +
     '<button class="btn small" data-setyt="' + exId + '">Salva</button></div>' +
     '<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">' +
     '<input id="vf-' + exId + '" class="vfile" data-ex="' + exId + '" type="file" accept="video/*" capture style="max-width:200px">' +
-    '<a class="btn ghost small" style="text-decoration:none;display:inline-block" href="' + cercaVideo(exId) + '" target="_blank" rel="noopener">Cercane uno</a>' +
-    (v ? '<button class="btn ghost small" data-delvideo="' + exId + '" style="border-color:var(--porfido);color:var(--porfido)">Togli</button>' : "") +
-    "</div></details></div>";
-  return h;
+    '<button class="btn ghost small" data-delvideo="' + exId + '" style="border-color:var(--porfido);color:var(--porfido)">Togli</button>' +
+    "</div></details>";
+  return h + "</div>";
 }
-
-
 function scarica(nome, testo, tipo){
   const b = new Blob([testo], {type:tipo || "text/plain;charset=utf-8"});
   const a = document.createElement("a");
@@ -2379,9 +2418,6 @@ function vistaImpostazioni(){
     '<li>Vai su "Credenziali", premi "Crea credenziali" e scegli "Chiave API".</li>' +
     '<li>Copia la chiave e incollala qui sotto.</li></ol>' +
     '<p class="tiny">La chiave resta solo sul tuo telefono. Il servizio è gratuito entro un uso normale.</p></details>' +
-    '<label>Quando tocchi il video</label><div class="chips">' +
-    '<button class="chip" data-ytdir="1" aria-pressed="' + (S.ytDiretto !== false) + '">Apri YouTube sul video</button>' +
-    '<button class="chip" data-ytdir="0" aria-pressed="' + (S.ytDiretto === false) + '">Guardalo dentro l\'app</button></div>' +
     '<label for="f-ytkey">Chiave API di YouTube</label>' +
     '<input id="f-ytkey" type="text" value="' + esc(S.ytKey) + '" placeholder="AIza…">' +
     '<div style="height:10px"></div><button class="btn ghost" id="salva-ytkey">Salva la chiave</button>' +
@@ -2488,12 +2524,7 @@ function vistaGiorno(gi){
       h += '<div class="tiny" style="margin-top:6px">' + esc(c.txt) + "</div>";
     }
     h += '</div></div><div class="piede"><div class="exBtns">' +
-      '<button class="btn ghost small" data-apri="' + k + '">' + (aperto ? "Chiudi" : "Registra le serie") + "</button>" +
-      (S.video[e.id] && S.video[e.id].tipo === "yt"
-        ? '<a class="btn ghost small" style="text-decoration:none;display:inline-block" href="https://www.youtube.com/watch?v=' +
-          S.video[e.id].id + '" target="_blank" rel="noopener">Apri su YouTube</a>'
-        : '<a class="btn ghost small" style="text-decoration:none;display:inline-block" href="' + cercaVideo(e.id) +
-          '" target="_blank" rel="noopener">Cerca su YouTube</a>') +
+      '<button class="btn ghost small largo" data-apri="' + k + '">' + (aperto ? "Chiudi" : "Registra le serie") + "</button>" +
       '<button class="btn ghost small" data-video="' + k + '">' + (S.videoAperto === k ? "Chiudi" : "Come si fa") + "</button>" +
       '<button class="btn ghost small" data-scambia="' + k + '">Attrezzo occupato</button></div>';
     if(S.videoAperto === k) h += pannelloVideo(e.id);
@@ -2792,7 +2823,7 @@ document.addEventListener("click", async function(ev){
   /* un pannello alla volta: aprirne uno chiude gli altri due */
   if(d.apri){ S.exAperto = S.exAperto === d.apri ? null : d.apri; S.scambiaPer = null; S.videoAperto = null; S.scroll = 0; render(); return; }
   if(d.ytdir !== undefined){
-    S.ytDiretto = d.ytdir === "1";
+    S.ytDiretto = d.ytdir === "1";  /* non piu' usato: il video si guarda sempre dentro l'app */
     S.ytKey = (($("#f-ytkey") || {}).value || S.ytKey || "").trim();
     await salva(); render(); return;
   }
